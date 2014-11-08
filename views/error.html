@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+        <title>404</title>
+    </head>
+    <body class="container">
+        <div class="jumbotron">
+            <h1>{{ error.status }} {{ err }}</h1>
+            <p>This page could not be retrived.  <a href="/">Return to index.</a></p>
+        </div>
+        {% if message %}
+            <h2 class="page-header">More information:</h2>
+            <h3>{{message}}</h3>
+            <p>
+                {{error.stack}}
+            </p>
+        {% endif %}
+    </body>
+</html>
