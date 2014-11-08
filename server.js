@@ -1,12 +1,14 @@
 var express = require('express'),
+    path = require('path'),
     swig = require('swig'),
     app = express();
     
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
 app.set('views', (__dirname, 'views'));
-    
-app.use(express.static(__dirname, 'public'));
+
+app.use(express.static(__dirname + '/public'));
+
 
 app.use(function(req, res, next) {
     var err = new Error('Not Found');

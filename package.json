@@ -5,6 +5,11 @@
   "private": true,
   "dependencies": {
     "express": "~4.9.0",
+    "grunt": "^0.4.5",
     "swig": "^1.4.2"
+  },
+  "devDependencies": {
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-watch": "^0.6.1"
   }
 }
