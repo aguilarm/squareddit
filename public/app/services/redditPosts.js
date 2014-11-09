@@ -8,7 +8,7 @@ squareddit.factory('posts', ['$http', function postsFactory($http) {
         console.log('getting hot posts');
         return $http({
                 method: 'JSONP',
-                url: '//www.reddit.com/r/' + subreddit + '/hot',
+                url: 'http://www.reddit.com/r/' + subreddit + '/hot.json',
                 success: function (data) {
                     angular.copy(data, o.posts);
                 }

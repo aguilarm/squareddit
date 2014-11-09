@@ -5,17 +5,14 @@ module.exports = function(grunt) {
         
         concat: {
             dev: {
-                src: 'public/app/app.js',
-                src: 'public/app/services/*.js',
-                src: 'public/app/controllers/*.js',
-                src: 'public/app/config/*.js',
+                src: ['public/app/app.js', 'public/app/services/*.js', 'public/app/controllers/*.js', 'public/app/config/*.js'],
                 dest: 'public/js/squareddit.app.js'
             }
         },
         
         watch: {
             dev: {
-                files: ['public/app/*.js'],
+                files: ['public/app/*.js', 'public/app/**/*.js'],
                 tasks: ['concat']
             }
         },

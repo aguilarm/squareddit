@@ -5,17 +5,12 @@ squareddit.config([
     function ($stateProvider, $urlRouterProvider, $locationProvider) {
         $stateProvider
             .state('home', {
-                url: '/home',
+                url: '/',
                 templateUrl: '/app/views/home.html',
-                controller: 'listPosts',
-                resolve: {
-                    postPromise: ['posts', function (posts) {
-                        return posts.getHot(all);
-                    }]
-                }
+                controller: 'listPosts'
         });
             
-        $urlRouterProvider.otherwise('/home');
+        $urlRouterProvider.otherwise('/');
         
         $locationProvider.html5Mode({
             enabled: true,
