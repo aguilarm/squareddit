@@ -3,9 +3,9 @@
 squareddit.controller('listPosts', ['$scope', 'posts',
     function ($scope, posts) {
         $scope.posts = posts.posts;
-        $scope.checkPosts = function () {
+        $scope.updatePosts = function () {
             console.log($scope.subreddit);
-            posts.getHot($scope.subreddit);
-            console.log(posts.posts);
+            posts.hot = posts.getHot($scope.subreddit);
+            console.log(posts.hot);
         };
 }]);

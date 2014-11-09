@@ -10,15 +10,11 @@ squareddit.factory('posts', ['$http', function postsFactory($http) {
         posts: []
     };
     o.getHot = function (subreddit) {
-        console.log('getting hot posts');
-        return $http({
-                method: 'JSONP',
-                url: 'http://www.reddit.com/r/' + subreddit + '/hot.json',
-                success: function (data) {
-                    angular.copy(data, o.posts);
-                }
-        });
-    };
+        return $http.get('http://www.reddit.com/r/funny/hot.json').
+                then(function (res) {
+                    return res.data;
+                });
+        };
     return o;
 }]);
 'use strict';
@@ -26,10 +22,10 @@ squareddit.factory('posts', ['$http', function postsFactory($http) {
 squareddit.controller('listPosts', ['$scope', 'posts',
     function ($scope, posts) {
         $scope.posts = posts.posts;
-        $scope.checkPosts = function () {
+        $scope.updatePosts = function () {
             console.log($scope.subreddit);
-            posts.getHot($scope.subreddit);
-            console.log(posts.posts);
+            posts.hot = posts.getHot($scope.subreddit);
+            console.log(posts.hot);
         };
 }]);
 squareddit.config([
