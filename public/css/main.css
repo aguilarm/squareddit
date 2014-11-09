@@ -1,24 +1,55 @@
-.flexbox {
+body {background-color:#ddd;}
+
+.posts {
     display: flex;
     flex-wrap: wrap;
     height:100%;
 }
 
-.flex-item {
+.post {
     margin: auto;
-    width: 33%;
-    height: 33vh;
-    overflow: hidden;
+    width:33.33%;
+    height: 33.33vh;
+    position:relative;
 }
 
+.post > * {flex: 1 100%;}
+
 .post-title {
+    display:none;
     color:#fff;
     text-align:center;
     background-color: rgba(0,0,0,0.9);
     font-weight: bold;
+    text-decoration: none;
+    position:absolute;
+    bottom:0;
+    width:100%;
 }
 
-.post:hover .post-title {
-    color:#ddd;
-    background-color: rgba(0,0,0,0.4);
+.post-vote-container {
+    height:100%;
+    width:20%;
 }
+
+.post-vote {display:none;height:50%;}
+
+.post-vote > p {
+    display:table-cell;
+    vertical-align: middle;
+    text-align:center;
+    color:white;
+}
+
+.post-vote-upvote {
+    background-color:#FF8B60;
+    width:101%;
+}
+
+.post-vote-downvote {
+    background-color:#A194FF;
+    width:101%;
+}
+
+.post:hover .post-title {display:block;}
+.post:hover .post-vote {display:table;}
