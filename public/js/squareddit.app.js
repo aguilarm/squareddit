@@ -10,11 +10,8 @@ squareddit.factory('posts', ['$http', function postsFactory($http) {
         posts: []
     };
     o.getHot = function (subreddit) {
-        return $http.get('http://www.reddit.com/r/funny/hot.json').
-                then(function (res) {
-                    return res.data;
-                });
-        };
+        return $http.get('http://www.reddit.com/r/' + subreddit + '/hot.json');
+    };
     return o;
 }]);
 'use strict';
@@ -23,9 +20,20 @@ squareddit.controller('listPosts', ['$scope', 'posts',
     function ($scope, posts) {
         $scope.posts = posts.posts;
         $scope.updatePosts = function () {
+            if (!$scope.subreddit)
+                return 'Error';
+            $scope.hot = '';
             console.log($scope.subreddit);
-            posts.hot = posts.getHot($scope.subreddit);
-            console.log(posts.hot);
+            posts.getHot($scope.subreddit).
+                success(function (response) {
+                    $scope.hot = response.data.children;
+                }).
+                error(function () {
+                    return 'Error';
+                });
+        };
+        $scope.showPosts = function () {
+            console.log($scope.hot);
         };
 }]);
 squareddit.config([

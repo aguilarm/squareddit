@@ -5,10 +5,7 @@ squareddit.factory('posts', ['$http', function postsFactory($http) {
         posts: []
     };
     o.getHot = function (subreddit) {
-        return $http.get('http://www.reddit.com/r/funny/hot.json').
-                then(function (res) {
-                    return res.data;
-                });
-        };
+        return $http.get('http://www.reddit.com/r/' + subreddit + '/hot.json');
+    };
     return o;
 }]);
