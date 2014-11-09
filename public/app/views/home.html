@@ -1,8 +1,10 @@
 <h2>Choose a subreddit to view posts from:</h2>
-<input ng-model="subreddit" placeholder="Subreddit"><br><br>
+<input ng-model="subreddit" placeholder="Subreddit">
 <button ng-click="updatePosts()" class="btn btn-primary">Update Posts</button>
 <button ng-click="showPosts()" class="btn btn-default">Post to Console</button>
 <br><br>
-<div ng-repeat="post in hot">
-    <a href="{{post.data.permalink}}" target="_self">{{post.data.title}}</a>
+<div class="flexbox">
+    <a ng-repeat="post in hot" class="flex-item post" href="http://www.reddit.com{{post.data.permalink}}" backimg="{{post.data.url}}">
+        <div class="post-title">{{post.data.title}}</div>
+    </a>
 </div>

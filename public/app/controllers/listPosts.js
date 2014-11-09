@@ -3,6 +3,7 @@
 squareddit.controller('listPosts', ['$scope', 'posts',
     function ($scope, posts) {
         $scope.posts = posts.posts;
+        $scope.subreddit = 'cityporn';
         $scope.updatePosts = function () {
             if (!$scope.subreddit)
                 return 'Error';

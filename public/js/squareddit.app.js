@@ -19,6 +19,7 @@ squareddit.factory('posts', ['$http', function postsFactory($http) {
 squareddit.controller('listPosts', ['$scope', 'posts',
     function ($scope, posts) {
         $scope.posts = posts.posts;
+        $scope.subreddit = 'cityporn';
         $scope.updatePosts = function () {
             if (!$scope.subreddit)
                 return 'Error';
@@ -56,3 +57,12 @@ squareddit.config([
         });
         
 }]);
+squareddit.directive('backimg', function(){
+    return function(scope, element, attrs){
+        var url = attrs.backimg;
+        element.css({
+            'background-image': 'url(' + url +')',
+            'background-size' : 'cover'
+        });
+    };
+});
