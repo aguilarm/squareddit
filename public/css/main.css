@@ -38,18 +38,18 @@ body {background-color:#ddd;}
     display:table-cell;
     vertical-align: middle;
     text-align:center;
-    color:white;
+    color:#fff;
 }
 
 .post-vote-upvote {
-    background-color:#FF8B60;
+    background-color:rgb(255, 139, 96);
     width:101%;
 }
-
 .post-vote-downvote {
-    background-color:#A194FF;
+    background-color:rgb(161, 148, 255);
     width:101%;
 }
 
 .post:hover .post-title {display:block;}
-.post:hover .post-vote {display:table;}
+.post:hover .post-vote {display:table; opacity:0.3;}
+.post-vote-upvote:hover {opacity:0.8;}
