@@ -1,4 +1,38 @@
 body {background-color:#ddd;}
+.sidenav-placeholder {
+    width:3%;
+    height:100%;
+    display:block;
+    float:left;
+    position:absolute;
+}
+.sidenav {
+    width:3%;
+    height:100%;
+    top:0;
+    left:0;
+    position:fixed;
+    background-color:#000;
+    z-index:9999;
+    display:table;
+}
+.sidenav>.glyphicon {
+    display:table-cell;
+    vertical-align:middle;
+    text-align:center;
+    color:#fff;
+}
+
+main {
+    position:absolute;
+    width:100%;
+}
+
+.content {
+    position:absolute;
+    width:97%;
+    left:3%;
+}
 
 .posts {
     display: flex;
@@ -27,12 +61,12 @@ body {background-color:#ddd;}
     width:100%;
 }
 
-.post-vote-container {
-    height:100%;
+.post-vote {
+    opacity:0;
+    height:50%;
     width:20%;
+    display:table;
 }
-
-.post-vote {display:none;height:50%;}
 
 .post-vote > p {
     display:table-cell;
@@ -41,15 +75,9 @@ body {background-color:#ddd;}
     color:#fff;
 }
 
-.post-vote-upvote {
-    background-color:rgb(255, 139, 96);
-    width:101%;
-}
-.post-vote-downvote {
-    background-color:rgb(161, 148, 255);
-    width:101%;
-}
+.post-vote-upvote {background-color:rgb(255, 139, 96);}
+.post-vote-downvote {background-color:rgb(161, 148, 255);clear:right;}
 
 .post:hover .post-title {display:block;}
-.post:hover .post-vote {display:table; opacity:0.3;}
-.post-vote-upvote:hover {opacity:0.8;}
+.post:hover .post-vote {opacity:0.3;}
+.post:hover .post-vote:hover {opacity:0.9;}
