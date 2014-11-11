@@ -13,11 +13,18 @@
         
     </head>
     <body ng-app="squareddit">
-        <div class="sidenav-placeholder">
+        <div class="sidenav-pusher">
+            <div class="sidenav">
+            </div>
+            <div class="sidenav-pullbar">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </div>
+            <main>
+                <ui-view>
+                </ui-view>
+            </main>
         </div>
-        <div class="sidenav">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-        </div>
-        <ui-view></ui-view>
+        <script src="/js/vendor/classie.js"></script>
+        <script src="/js/vendor/sidebarEffects.js"></script>
     </body>
 </html>

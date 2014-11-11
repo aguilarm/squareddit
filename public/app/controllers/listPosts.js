@@ -8,10 +8,10 @@ squareddit.controller('listPosts', ['$scope', 'posts',
             if (!$scope.subreddit)
                 return 'Error';
             $scope.hot = '';
-            console.log($scope.subreddit);
             posts.getHot($scope.subreddit).
                 success(function (response) {
-                    $scope.hot = response.data.children;
+                    var data = posts.processImages(response.data.children);
+                    $scope.hot = data;
                 }).
                 error(function () {
                     return 'Error';

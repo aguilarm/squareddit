@@ -6,7 +6,7 @@ body {background-color:#ddd;}
     float:left;
     position:absolute;
 }
-.sidenav {
+.sidenav-pullbar {
     width:3%;
     height:100%;
     top:0;
@@ -16,7 +16,7 @@ body {background-color:#ddd;}
     z-index:9999;
     display:table;
 }
-.sidenav>.glyphicon {
+.sidenav-pullbar>.glyphicon {
     display:table-cell;
     vertical-align:middle;
     text-align:center;
