@@ -1,21 +1,21 @@
-<div class="content">
+<div class="sr-content">
     <h2>Choose a subreddit to view posts from:</h2>
     <input ng-model="subreddit" placeholder="Subreddit">
     <button ng-click="updatePosts()" class="btn btn-primary">Update Posts</button>
     <button ng-click="showPosts()" class="btn btn-default">Post to Console</button>
     <br><br>
-    <div class="posts">
-        <a ng-repeat="post in hot" href="http://www.reddit.com{{post.data.permalink}}" class="post" backimg="{{post.data.url}}">
-            <div class="post-vote-upvote post-vote pull-right">
+    <div class="sr-posts">
+        <a ng-repeat="post in hot" href="http://www.reddit.com{{post.data.permalink}}" class="sr-post" backimg="{{post.data.url}}">
+            <div class="sr-post-vote-upvote sr-post-vote pull-right">
                 <p>
                     <span class="glyphicon glyphicon-chevron-up"></span><br>
                     {{post.data.ups}}
                 </p>
             </div>
-            <div class="post-vote-downvote post-vote pull-right">
+            <div class="sr-post-vote-downvote sr-post-vote pull-right">
                 <p><span class="glyphicon glyphicon-chevron-down"></span></p>
             </div>
-            <div class="post-title">{{post.data.title}}</div>
+            <div class="sr-post-title">{{post.data.title}}</div>
         </a>
     </div>
 </div>
