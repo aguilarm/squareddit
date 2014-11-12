@@ -13,16 +13,20 @@
         
     </head>
     <body ng-app="squareddit">
-        <div class="sr-sidenav-pusher">
-            <div class="sr-sidenav">
+        <div id="sr-container" class="sr-container">
+            <div class="sr-pusher">
+                <div class="sr-menu">
+                    <h2>MENU</h2>
+                    <p>This is the menu.  Hello world.</p>
+                </div>
+                <div class="sr-menu-pullbar" id="sr-menu-pullbar">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </div>
+                <div class="sr-content">
+                    <ui-view>
+                    </ui-view>
+                </div>
             </div>
-            <div class="sr-sidenav-pullbar">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-            </div>
-            <main>
-                <ui-view>
-                </ui-view>
-            </main>
         </div>
         <script src="/js/vendor/classie.js"></script>
         <script src="/js/vendor/sidebarEffects.js"></script>

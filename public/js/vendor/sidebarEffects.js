@@ -30,36 +30,36 @@
 
 	function init() {
 
-		var container = document.getElementById( 'st-container' ),
-			buttons = Array.prototype.slice.call( document.querySelectorAll( '#st-trigger-effects > button' ) ),
+		var container = document.getElementById( 'sr-container' ),
+			button = document.getElementById('sr-menu-pullbar'),
 			// event type (if mobile use touch events)
 			eventtype = mobilecheck() ? 'touchstart' : 'click',
+			
 			resetMenu = function() {
-				classie.remove( container, 'st-menu-open' );
+				classie.remove( container, 'sr-menu-open' );
 			},
+			
 			bodyClickFn = function(evt) {
-				if( !hasParentClass( evt.target, 'st-menu' ) ) {
+				if( !hasParentClass( evt.target, 'sr-menu' ) ) {
 					resetMenu();
 					document.removeEventListener( eventtype, bodyClickFn );
 				}
 			};
 
-		buttons.forEach( function( el, i ) {
-			var effect = el.getAttribute( 'data-effect' );
+			var effect = 'sr-effect';
 
-			el.addEventListener( eventtype, function( ev ) {
+			button.addEventListener( eventtype, function( ev ) {
+				console.log('click/tap');
 				ev.stopPropagation();
 				ev.preventDefault();
-				container.className = 'st-container'; // clear
+				container.className = 'sr-container'; // clear
 				classie.add( container, effect );
 				setTimeout( function() {
-					classie.add( container, 'st-menu-open' );
+					classie.add( container, 'sr-menu-open' );
 				}, 25 );
 				document.addEventListener( eventtype, bodyClickFn );
 			});
-		} );
-
-	}
+		}
 
 	init();
 

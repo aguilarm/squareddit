@@ -1,59 +1,140 @@
+html, body, sr-container, sr-pusher, sr-content { height: 100%; }
 body {background-color:#ddd;}
-.sr-sidenav-placeholder {
-    width:3%;
+
+/*==================================
+    Sidebar Rules - from codrops
+    http://tympanus.net/codrops/2013/08/28/transitions-for-off-canvas-navigations/
+====================================*/
+
+.sr-content {overflow-y: scroll}
+
+.sr-content, .sr-content-inner {position:relative}
+
+.sr-container {position:relative;overflow:hidden}
+
+.sr-pusher {
+    position:relative;
+    left:0;
+    z-index:99;
     height:100%;
-    display:block;
-    float:left;
-    position:absolute;
+    transition:transform 0.5s;
 }
-.sr-sidenav-pullbar {
+
+.sr-pusher:after {
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    width:0;
+    height:0;
+    background:rgba(0,0,0,0.2);
+    opacity: 0;
+    transition:opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+}
+
+.sr-menu-open .sr-pusher:after {
+    width:100%;
+    height:100%;
+    opacity:1;
+    transition:opacity 0.5s;
+}
+
+.sr-menu {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index: 100;
+    visibility:hidden;
+    width:300px;
+    height:100%;
+    background:#48a770;
+    transition:all 0.5s;
+    background-color:#000;
+    color:#fff;
+}
+.sr-menu:after {
+    position:absolute;
+    top:0;
+    right:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.2);
+    content:'';
+    opacity:1;
+    transition:opacity 0.5s;
+}
+
+.sr-menu-open .sr-menu:after {
+    width:0;
+    height:0;
+    opacity:0;
+    transition:opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
+}
+.sr-menu-pullbar {
     width:3%;
     height:100%;
     top:0;
     left:0;
-    position:fixed;
     background-color:#000;
     z-index:9999;
     display:table;
+    float:left;
 }
-.sr-sidenav-pullbar>.glyphicon {
+.sr-menu-pullbar>.glyphicon {
     display:table-cell;
     vertical-align:middle;
     text-align:center;
     color:#fff;
 }
 
+/*==================================
+    Sidebar Effect
+====================================*/
+
+.sr-effect.sr-container {perspective: 1500px;}
+.sr-effect .sr-pusher {
+    transform-origin: 0% 50%;
+    transform-style: preserve-3d;
+}
+.sr-effect.sr-menu-open .sr-pusher {transform: translate3d(300px, 0, 0) rotateY(-15deg);}
+.sr-effect.sr-menu {
+    transform:translate3d(-100%, 0, 0); 
+    transform-origin:100% 50%; 
+    transform-style: preserve-3d;
+}
+.sr-effect.sr-menu-open .sr-effect.sr-menu {
+    visibility:visible;
+    transition:transform 0.5s;
+    transform:translate3d(-100%, 0, 0) rotateY(15deg);
+}
+.sr-effect.sr-menu:after {display:none;}
+
+/*==================================
+    Content Styles
+====================================*/
+
 main {
     position:absolute;
     width:100%;
 }
-
-.sr-content {
-    position:absolute;
-    width:97%;
-    left:3%;
-}
-
 .sr-posts {
     display: flex;
     flex-wrap: wrap;
     height:100%;
 }
-
 .sr-post {
     margin: auto;
     width:33.33%;
-    height: 33.33vh;
+    height: 66.66vh;
     position:relative;
 }
-
-.sr-post > * {flex: 1 100%;}
+.sr-post > * {flex: 1 100%;transition: opacity,500ms;}
 
 .sr-post-title {
-    display:none;
+    opacity: 0;
     color:#fff;
     text-align:center;
-    background-color: rgba(0,0,0,0.9);
+    background-color: #000;
     font-weight: bold;
     text-decoration: none;
     position:absolute;
@@ -78,6 +159,6 @@ main {
 .sr-post-vote-upvote {background-color:rgb(255, 139, 96);}
 .sr-post-vote-downvote {background-color:rgb(161, 148, 255);clear:right;}
 
-.sr-post:hover .sr-post-title {display:block;}
+.sr-post:hover .sr-post-title {opacity:0.7;}
 .sr-post:hover .sr-post-vote {opacity:0.3;}
 .sr-post:hover .sr-post-vote:hover {opacity:0.9;}

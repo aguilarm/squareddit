@@ -10,6 +10,6 @@ squareddit.factory('posts', ['$http', function postsFactory($http) {
     o.processImages = function (data) {
         //todo this should add img tags/change for flickr and imgur links with no extension
         return data;
-    }
+    };
     return o;
 }]);
