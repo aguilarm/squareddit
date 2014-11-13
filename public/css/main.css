@@ -6,108 +6,75 @@ body {background-color:#ddd;}
     http://tympanus.net/codrops/2013/08/28/transitions-for-off-canvas-navigations/
 ====================================*/
 
-.sr-content {overflow-y: scroll}
+.sr-content {position:relative}
 
-.sr-content, .sr-content-inner {position:relative}
-
-.sr-container {position:relative;overflow:hidden}
+.sr-container {position:relative;}
 
 .sr-pusher {
     position:relative;
-    left:0;
+    left:3vw;
+    max-width:97vw;
     z-index:99;
+    min-height:100vh;
     height:100%;
     transition:transform 0.5s;
 }
 
-.sr-pusher:after {
-    content:'';
-    position:absolute;
-    top:0;
-    right:0;
-    width:0;
-    height:0;
-    background:rgba(0,0,0,0.2);
-    opacity: 0;
-    transition:opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
-}
-
-.sr-menu-open .sr-pusher:after {
-    width:100%;
-    height:100%;
-    opacity:1;
-    transition:opacity 0.5s;
-}
-
 .sr-menu {
-    position:absolute;
+    position:fixed;
     top:0;
     left:0;
     z-index: 100;
-    visibility:hidden;
     width:300px;
-    height:100%;
+    height:100vh;
     background:#48a770;
     transition:all 0.5s;
     background-color:#000;
     color:#fff;
 }
-.sr-menu:after {
-    position:absolute;
-    top:0;
-    right:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.2);
-    content:'';
-    opacity:1;
-    transition:opacity 0.5s;
-}
-
-.sr-menu-open .sr-menu:after {
-    width:0;
-    height:0;
-    opacity:0;
-    transition:opacity 0.5s, width 0.1s 0.5s, height 0.1s 0.5s;
-}
 .sr-menu-pullbar {
-    width:3%;
-    height:100%;
-    top:0;
-    left:0;
+    position:relative;
+    left:3vw;
+    width:3vw;
+    height:100vh;
     background-color:#000;
-    z-index:9999;
-    display:table;
-    float:left;
+    float:right;
 }
-.sr-menu-pullbar>.glyphicon {
+.sr-menu-pullbar-wrap {
+    width:100%;
+    display:table;
+    height:100%;
+}
+.sr-effect.sr-menu-open .sr-menu-pullbar-wrap>.glyphicon {transform:rotate(180deg)}
+.sr-menu-pullbar-wrap>.glyphicon {
+    text-align:center;
     display:table-cell;
     vertical-align:middle;
-    text-align:center;
     color:#fff;
+    transition:transform 0.2s;
 }
+
 
 /*==================================
     Sidebar Effect
 ====================================*/
 
-.sr-effect.sr-container {perspective: 1500px;}
-.sr-effect .sr-pusher {
+.sr-container{overflow-y:hidden;}
+.sr-container.sr-menu-open {perspective: 1500px;overflow-y:hidden;}
+.sr-pusher {
     transform-origin: 0% 50%;
     transform-style: preserve-3d;
 }
-.sr-effect.sr-menu-open .sr-pusher {transform: translate3d(300px, 0, 0) rotateY(-15deg);}
-.sr-effect.sr-menu {
+.sr-menu-open .sr-pusher {transform: translate3d(300px, 0, 0) rotateY(-15deg);}
+.sr-menu {
     transform:translate3d(-100%, 0, 0); 
     transform-origin:100% 50%; 
     transform-style: preserve-3d;
 }
-.sr-effect.sr-menu-open .sr-effect.sr-menu {
-    visibility:visible;
+.sr-menu-open .sr-menu {
     transition:transform 0.5s;
-    transform:translate3d(-100%, 0, 0) rotateY(15deg);
+    transform:translate3d(0%, 0, 0);
 }
-.sr-effect.sr-menu:after {display:none;}
 
 /*==================================
     Content Styles

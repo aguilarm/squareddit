@@ -14,14 +14,16 @@
     </head>
     <body ng-app="squareddit">
         <div id="sr-container" class="sr-container">
-            <div class="sr-pusher">
-                <div class="sr-menu">
+            <div class="sr-menu sr-effect">
+                    <div class="sr-menu-pullbar" id="sr-menu-pullbar">
+                        <div class="sr-menu-pullbar-wrap">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                        </div>
+                    </div>
                     <h2>MENU</h2>
                     <p>This is the menu.  Hello world.</p>
                 </div>
-                <div class="sr-menu-pullbar" id="sr-menu-pullbar">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                </div>
+            <div class="sr-pusher">
                 <div class="sr-content">
                     <ui-view>
                     </ui-view>

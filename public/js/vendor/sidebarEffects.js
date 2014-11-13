@@ -13,7 +13,7 @@
  */
  var SidebarMenuEffects = (function() {
 
- 	function hasParentClass( e, classname ) {
+	function hasParentClass( e, classname ) {
 		if(e === document) return false;
 		if( classie.has( e, classname ) ) {
 			return true;
@@ -30,13 +30,13 @@
 
 	function init() {
 
-		var container = document.getElementById( 'sr-container' ),
+		var container = document.getElementById('sr-container'),
 			button = document.getElementById('sr-menu-pullbar'),
 			// event type (if mobile use touch events)
 			eventtype = mobilecheck() ? 'touchstart' : 'click',
 			
 			resetMenu = function() {
-				classie.remove( container, 'sr-menu-open' );
+				classie.remove( document.body, 'sr-menu-open' );
 			},
 			
 			bodyClickFn = function(evt) {
@@ -52,10 +52,8 @@
 				console.log('click/tap');
 				ev.stopPropagation();
 				ev.preventDefault();
-				container.className = 'sr-container'; // clear
-				classie.add( container, effect );
 				setTimeout( function() {
-					classie.add( container, 'sr-menu-open' );
+					classie.toggle( document.body, 'sr-menu-open' );
 				}, 25 );
 				document.addEventListener( eventtype, bodyClickFn );
 			});
