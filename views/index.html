@@ -13,20 +13,18 @@
         
     </head>
     <body ng-app="squareddit">
-        <div id="sr-container" class="sr-container">
-            <div class="sr-menu sr-effect">
-                    <div class="sr-menu-pullbar" id="sr-menu-pullbar">
-                        <div class="sr-menu-pullbar-wrap">
-                            <span class="glyphicon glyphicon-chevron-right"></span>
-                        </div>
-                    </div>
-                    <h2>MENU</h2>
-                    <p>This is the menu.  Hello world.</p>
+        <div class="sr-menu sr-effect">
+            <div class="sr-menu-pullbar" id="sr-menu-pullbar">
+                <div class="sr-menu-pullbar-wrap">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
                 </div>
+            </div>
+            <div ui-view="menu"></div>
+        </div>
+        <div id="sr-container" class="sr-container">
+            
             <div class="sr-pusher">
-                <div class="sr-content">
-                    <ui-view>
-                    </ui-view>
+                <div ui-view="content" class="sr-content">
                 </div>
             </div>
         </div>

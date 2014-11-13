@@ -27,11 +27,11 @@ body {background-color:#ddd;}
     z-index: 100;
     width:300px;
     height:100vh;
-    background:#48a770;
     transition:all 0.5s;
     background-color:#000;
     color:#fff;
 }
+
 .sr-menu-pullbar {
     position:relative;
     left:3vw;
@@ -45,7 +45,7 @@ body {background-color:#ddd;}
     display:table;
     height:100%;
 }
-.sr-effect.sr-menu-open .sr-menu-pullbar-wrap>.glyphicon {transform:rotate(180deg)}
+.sr-menu-open .sr-menu-pullbar-wrap>.glyphicon {transform:rotate(180deg)}
 .sr-menu-pullbar-wrap>.glyphicon {
     text-align:center;
     display:table-cell;
@@ -59,8 +59,8 @@ body {background-color:#ddd;}
     Sidebar Effect
 ====================================*/
 
-.sr-container{overflow-y:hidden;}
-.sr-container.sr-menu-open {perspective: 1500px;overflow-y:hidden;}
+.sr-container{overflow-y:hidden;perspective: 1500px;}
+.sr-menu-open .sr-container {overflow-y:hidden;}
 .sr-pusher {
     transform-origin: 0% 50%;
     transform-style: preserve-3d;

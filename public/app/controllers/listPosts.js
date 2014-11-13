@@ -3,6 +3,7 @@
 squareddit.controller('listPosts', ['$scope', 'posts',
     function ($scope, posts) {
         $scope.posts = posts.posts;
+        $scope.hot = posts.curHot;
         $scope.subreddit = 'cityporn';
         $scope.updatePosts = function () {
             if (!$scope.subreddit)
@@ -11,7 +12,7 @@ squareddit.controller('listPosts', ['$scope', 'posts',
             posts.getHot($scope.subreddit).
                 success(function (response) {
                     var data = posts.processImages(response.data.children);
-                    $scope.hot = data;
+                    posts.curHot = data;
                 }).
                 error(function () {
                     return 'Error';

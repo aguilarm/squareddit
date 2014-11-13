@@ -12,6 +12,7 @@ squareddit.factory('posts', ['$http', function postsFactory($http) {
     o.getHot = function (subreddit) {
         return $http.get('http://www.reddit.com/r/' + subreddit + '/hot.json');
     };
+    o.curHot = {};
     o.processImages = function (data) {
         //todo this should add img tags/change for flickr and imgur links with no extension
         return data;
@@ -23,6 +24,7 @@ squareddit.factory('posts', ['$http', function postsFactory($http) {
 squareddit.controller('listPosts', ['$scope', 'posts',
     function ($scope, posts) {
         $scope.posts = posts.posts;
+        $scope.hot = posts.curHot;
         $scope.subreddit = 'cityporn';
         $scope.updatePosts = function () {
             if (!$scope.subreddit)
@@ -31,7 +33,7 @@ squareddit.controller('listPosts', ['$scope', 'posts',
             posts.getHot($scope.subreddit).
                 success(function (response) {
                     var data = posts.processImages(response.data.children);
-                    $scope.hot = data;
+                    posts.curHot = data;
                 }).
                 error(function () {
                     return 'Error';
@@ -49,8 +51,16 @@ squareddit.config([
         $stateProvider
             .state('home', {
                 url: '/',
-                templateUrl: '/app/views/home.html',
-                controller: 'listPosts'
+                views: {
+                    'main': {
+                        templateUrl: '/app/views/home.html',
+                        controller: 'listPosts'
+                    },
+                    'menu': {
+                        templateUrl: '/app/views/menu/home.html',
+                        controller: 'listPosts'
+                    }
+                }
         });
             
         $urlRouterProvider.otherwise('/');

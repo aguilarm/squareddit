@@ -6,8 +6,16 @@ squareddit.config([
         $stateProvider
             .state('home', {
                 url: '/',
-                templateUrl: '/app/views/home.html',
-                controller: 'listPosts'
+                views: {
+                    'main': {
+                        templateUrl: '/app/views/home.html',
+                        controller: 'listPosts'
+                    },
+                    'menu': {
+                        templateUrl: '/app/views/menu/home.html',
+                        controller: 'listPosts'
+                    }
+                }
         });
             
         $urlRouterProvider.otherwise('/');
