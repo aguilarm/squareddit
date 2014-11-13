@@ -2,12 +2,10 @@
 
 squareddit.controller('menuControls', ['$scope', 'posts',
     function ($scope, posts) {
-        $scope.hot = posts.currentHot;
-        $scope.subreddit = posts.currentSub;
+        $scope.posts = posts;
         $scope.updatePosts = function () {
-            if (!$scope.subreddit)
-                return 'Error';
-            posts.getHot($scope.subreddit);
+            console.log(posts.currentSub);
+            posts.getHot(posts.currentSub);
         };
         $scope.showPosts = function () {
             console.log($scope.hot);

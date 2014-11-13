@@ -31,7 +31,12 @@ body {background-color:#ddd;}
     background-color:#000;
     color:#fff;
 }
-
+.sr-menu-main {
+    padding:5px;
+}
+.sr-menu-main input {
+    color: black;
+}
 .sr-menu-pullbar {
     position:relative;
     left:3vw;
