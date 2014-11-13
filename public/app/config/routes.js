@@ -7,13 +7,13 @@ squareddit.config([
             .state('home', {
                 url: '/',
                 views: {
-                    'main': {
+                    'content': {
                         templateUrl: '/app/views/home.html',
                         controller: 'listPosts'
                     },
                     'menu': {
                         templateUrl: '/app/views/menu/home.html',
-                        controller: 'listPosts'
+                        controller: 'menuControls'
                     }
                 }
         });

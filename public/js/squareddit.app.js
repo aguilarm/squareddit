@@ -6,38 +6,40 @@ var squareddit = angular.module('squareddit', ['ui.router']);
 'use strict';
 
 squareddit.factory('posts', ['$http', function postsFactory($http) {
-    var o = {
-        posts: []
+    var currentHot = {},
+        currentSub = 'cityporn',
+        processImages = function (data) {
+            //todo this should add img tags/change for flickr and imgur links with no extension
+            return data;
+        };
+    return {
+        getHot: function (subreddit) {
+            return $http.get('http://www.reddit.com/r/' + subreddit + '/hot.json').
+                success(function (response) {
+                    var data = response.data.children;
+                    currentHot = data;
+                });
+        },
+        currentHot: currentHot,
+        currentSub: currentSub
     };
-    o.getHot = function (subreddit) {
-        return $http.get('http://www.reddit.com/r/' + subreddit + '/hot.json');
-    };
-    o.curHot = {};
-    o.processImages = function (data) {
-        //todo this should add img tags/change for flickr and imgur links with no extension
-        return data;
-    };
-    return o;
 }]);
 'use strict';
 
 squareddit.controller('listPosts', ['$scope', 'posts',
     function ($scope, posts) {
-        $scope.posts = posts.posts;
-        $scope.hot = posts.curHot;
-        $scope.subreddit = 'cityporn';
+        $scope.hot = posts.currentHot;
+}]);
+'use strict';
+
+squareddit.controller('menuControls', ['$scope', 'posts',
+    function ($scope, posts) {
+        $scope.hot = posts.currentHot;
+        $scope.subreddit = posts.currentSub;
         $scope.updatePosts = function () {
             if (!$scope.subreddit)
                 return 'Error';
-            $scope.hot = '';
-            posts.getHot($scope.subreddit).
-                success(function (response) {
-                    var data = posts.processImages(response.data.children);
-                    posts.curHot = data;
-                }).
-                error(function () {
-                    return 'Error';
-                });
+            posts.getHot($scope.subreddit);
         };
         $scope.showPosts = function () {
             console.log($scope.hot);
@@ -52,13 +54,13 @@ squareddit.config([
             .state('home', {
                 url: '/',
                 views: {
-                    'main': {
+                    'content': {
                         templateUrl: '/app/views/home.html',
                         controller: 'listPosts'
                     },
                     'menu': {
                         templateUrl: '/app/views/menu/home.html',
-                        controller: 'listPosts'
+                        controller: 'menuControls'
                     }
                 }
         });
