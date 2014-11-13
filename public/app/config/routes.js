@@ -15,6 +15,11 @@ squareddit.config([
                         templateUrl: '/app/views/menu/home.html',
                         controller: 'menuControls'
                     }
+                },
+                resolve: {
+                    post: ['posts', function (posts) {
+                        return posts.getHot('cityporn');
+                    }]
                 }
         });
             

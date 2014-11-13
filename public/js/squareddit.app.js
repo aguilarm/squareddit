@@ -19,10 +19,8 @@ squareddit.factory('posts', ['$http', function postsFactory($http) {
             console.log('g');
             return $http.get('http://www.reddit.com/r/' + subreddit + '/hot.json').
                 success(function (response) {
-                    console.log(current.hot);
                     var thesePosts = response.data.children;
                     angular.copy(thesePosts, current.hot);
-                    console.log(current.hot);
                 });
         },
         current: current,
@@ -65,6 +63,11 @@ squareddit.config([
                         templateUrl: '/app/views/menu/home.html',
                         controller: 'menuControls'
                     }
+                },
+                resolve: {
+                    post: ['posts', function (posts) {
+                        return posts.getHot('cityporn');
+                    }]
                 }
         });
             
