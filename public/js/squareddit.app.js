@@ -19,19 +19,17 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
             return;
         },
         processImages = function (data) {
-            //set initial value, add more as needed.
-            angular.copy(data, current.hot);
-            var updatedData = data,
-                currentIndex = 0;
-            console.log(updatedData);
             for (var i = 0; i < data.length; i++) {
                 var post = data[i].data,
                     hasExt = (/\.(gif|jpg|jpeg|tiff|png)$/i).test(post.url);
-                    console.log(updatedData[i].data.url);
                 //check for imgur links without extention, if one is found, return the promise
                 if (post.domain.search("imgur.com") != -1 && hasExt === false) {
                     //imgur will serve the correct image no matter what extension you put in the address...
                     post.url += '.jpg';
+                }
+                //if it's a sticky post, don't display it.
+                if (post.stickied) {
+                    data.splice(i, 1);
                 }
                     
             }
