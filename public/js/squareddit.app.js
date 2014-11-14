@@ -22,28 +22,23 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
             console.log(data.length);
             for (var i = 0; i < data.length; i++) {
                 var post = data[i].data,
+                    lastChar = post.url.substr(-1),
                     hasExt = (/\.(gif|jpg|jpeg|tiff|png)$/i).test(post.url);
                 //if it's a sticky post, don't display it.
-                if (post.stickied)
-                    data.splice(i, 1);
-                //check for imgur links without extention, if one is found, return the promise
-                if (post.domain.search("imgur.com") != -1 && hasExt === false) {
+                if (post.stickied) {
+                    data.splice(i,1)
+                    i = i - 1;
+                    continue;
+                }
+                if (post.domain.search("imgur") >= 0 && hasExt === false) {
                     //imgur will serve the correct image no matter what extension you put in the address...
                     post.url += '.jpg';
+                    continue;
+                } 
+                if (hasExt === false) {
+                    data.splice(i,1);
+                    i = i - 1;
                 }
-                //flickr requires some work to grab the author and photo from indirect links,
-                //and 500px appears to sell the photos, so linking them is questionable
-                //for now, just removing them.
-                if(post.domain.search("flickr") != -1) {
-                    console.log(post.domain);
-                    console.log(post.url);
-                    console.log(post.title);
-                    data.splice(i, 1);
-                    console.log(i);
-                }
-                if(post.domain.search("500px.com") != -1)
-                    data.splice(i, 1);
-            console.log(i);
             }
             return data;
         };
@@ -110,7 +105,13 @@ squareddit.config([
 }]);
 squareddit.directive('backimg', function(){
     return function(scope, element, attrs){
-        var url = attrs.backimg;
+        var url = attrs.backimg; 
+        
+        if (!(/\.(gif|jpg|jpeg|tiff|png)$/i).test(url)) {
+            element.css({'background-color':'#000'});
+            return;
+        }
+        
         element.css({
             'background-image': 'url(' + url +')',
             'background-size' : 'cover',
