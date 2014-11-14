@@ -20,17 +20,8 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
                     console.log(updatedData[i].data.url);
                 //check for imgur links without extention, if one is found, return the promise
                 if (post.domain.search("imgur.com") != -1 && hasExt === false) {
-                    var imageId = post.url.match(/[^\/]*$/)[0];
-                    $http.get('https://api.imgur.com/3/image/' + imageId + '.json', {
-                        headers: {'Authorization': 'Client-ID ' + ids.imgurID}
-                    }).success(function (response) {
-                        //add this link to updatedData and then overwrite the old current.hot data
-                        //pretty sure there is a better solution here, but:
-                        post.url = response.data.link;
-                        console.log(updatedData[i]);
-                        updatedData[i].data.url = post.url;
-                        angular.copy(updatedData, current.hot);
-                    });
+                    //imgur will serve the correct image no matter what extension you put in the address...
+                    post.url += '.jpg';
                 }
                     
             }
@@ -40,7 +31,8 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
         getHot: function (subreddit) {
             return $http.get('http://www.reddit.com/r/' + subreddit + '/hot.json').
                 success(function (response) {
-                    processImages(response.data.children);
+                    var imgs = processImages(response.data.children);
+                    angular.copy(imgs, current.hot);
                 });
         },
         current: current,

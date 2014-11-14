@@ -3,7 +3,8 @@ squareddit.directive('backimg', function(){
         var url = attrs.backimg;
         element.css({
             'background-image': 'url(' + url +')',
-            'background-size' : 'cover'
+            'background-size' : 'cover',
+            'background-position' : '50% 50%'
         });
     };
 });
