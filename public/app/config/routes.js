@@ -18,7 +18,7 @@ squareddit.config([
                 },
                 resolve: {
                     post: ['posts', function (posts) {
-                        return posts.getHot('cityporn');
+                        return posts.getPosts('cityporn', 'hot', false);
                     }]
                 }
         });

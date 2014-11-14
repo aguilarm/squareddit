@@ -1,14 +1,14 @@
-<div class="sr-posts">
-    <a ng-repeat="post in posts.hot" href="http://www.reddit.com{{post.data.permalink}}" class="sr-post" backimg="{{post.data.url}}">
+<div class="sr-posts" id="sr-posts">
+    <a ng-repeat="post in posts.current" href="http://www.reddit.com{{post.permalink}}" class="sr-post" backimg="{{post.url}}">
         <div class="sr-post-vote-upvote sr-post-vote pull-right">
             <p>
                 <span class="glyphicon glyphicon-chevron-up"></span><br>
-                {{post.data.ups}}
+                {{post.ups}}
             </p>
         </div>
         <div class="sr-post-vote-downvote sr-post-vote pull-right">
             <p><span class="glyphicon glyphicon-chevron-down"></span></p>
         </div>
-        <div class="sr-post-title">{{post.data.title}}</div>
+        <div class="sr-post-title">{{post.title}}</div>
     </a>
 </div>

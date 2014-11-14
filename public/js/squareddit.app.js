@@ -11,28 +11,29 @@ squareddit.factory('ids', function idsFactory() {
 'use strict';
 
 squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
-    var current = {
-            hot: [],
-        },
-        currentSub = 'test',
+    var current = [],
+        currentSub = 'cityporn',
+        loading = false,
+        after,
         processImgur = function (data) {
             return;
         },
         processImages = function (data) {
-            console.log(data.length);
             for (var i = 0; i < data.length; i++) {
                 var post = data[i].data,
                     lastChar = post.url.substr(-1),
                     hasExt = (/\.(gif|jpg|jpeg|tiff|png)$/i).test(post.url);
                 //if it's a sticky post, don't display it.
                 if (post.stickied) {
-                    data.splice(i,1)
+                    data.splice(i,1);
                     i = i - 1;
+                    console.log('sticky');
                     continue;
                 }
                 if (post.domain.search("imgur") >= 0 && hasExt === false) {
                     //imgur will serve the correct image no matter what extension you put in the address...
                     post.url += '.jpg';
+                    console.log('imgur.jpg');
                     continue;
                 } 
                 if (hasExt === false) {
@@ -43,23 +44,56 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
             return data;
         };
     return {
-        getHot: function (subreddit) {
-            return $http.get('http://www.reddit.com/r/' + subreddit + '/hot.json').
+        getPosts: function (subreddit, sortMethod, pageUp) {
+            if (loading) return;
+            loading = true;
+            
+            if (!sortMethod) 
+                sortMethod = 'hot';
+            
+            var url = 'http://www.reddit.com/r/' + subreddit + '/' + sortMethod + '.json';
+            
+            if (after && pageUp)
+                url += after;
+                
+            return $http.get(url).
                 success(function (response) {
                     var imgs = processImages(response.data.children);
-                    angular.copy(imgs, current.hot);
+                    for (var i = 0; i < imgs.length; i++) {
+                        current.push(imgs[i].data);
+                    }
+                    after = '?after=' + imgs[imgs.length-1].data.name;
+                    loading = false;
                 });
         },
         current: current,
         currentSub: currentSub,
-        hot: current.hot
     };
 }]);
 'use strict';
 
 squareddit.controller('listPosts', ['$scope', 'posts',
     function ($scope, posts) {
+        var postsLength = document.getElementById('sr-posts').offsetHeight,
+            winH = window.innerHeight,
+            halfWinH = winH/2,
+            scrollPosBottom,
+            threshold;
         $scope.posts = posts;
+        setInterval(function() {
+            scrollPosBottom = window.pageYOffset + winH;
+            postsLength = document.getElementById('sr-posts').offsetHeight;
+            threshold = postsLength - winH;
+            if (scrollPosBottom >= threshold)
+                posts.getPosts(posts.currentSub, 'hot', true);
+                
+        }, 300);
+        
+        
+        
+        
+            
+            
 }]);
 'use strict';
 
@@ -67,7 +101,7 @@ squareddit.controller('menuControls', ['$scope', 'posts',
     function ($scope, posts) {
         $scope.posts = posts;
         $scope.updatePosts = function () {
-            posts.getHot(posts.currentSub);
+            posts.getPosts(posts.currentSub, 'hot');
         };
 }]);
 squareddit.config([
@@ -90,7 +124,7 @@ squareddit.config([
                 },
                 resolve: {
                     post: ['posts', function (posts) {
-                        return posts.getHot('cityporn');
+                        return posts.getPosts('cityporn', 'hot', false);
                     }]
                 }
         });
