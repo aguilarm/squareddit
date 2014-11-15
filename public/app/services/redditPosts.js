@@ -11,7 +11,6 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
         processImages = function (data) {
             for (var i = 0; i < data.length; i++) {
                 var post = data[i].data,
-                    lastChar = post.url.substr(-1),
                     hasExt = (/\.(gif|jpg|jpeg|tiff|png)$/i).test(post.url);
                 //if it's a sticky post, don't display it.
                 if (post.stickied) {
@@ -41,6 +40,13 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
             if (!sortMethod) 
                 sortMethod = 'hot';
             
+            if (subreddit != currentSub) {
+                var blank=[];
+                angular.copy(blank, current);
+            }
+            
+            currentSub = subreddit;
+            
             var url = 'http://www.reddit.com/r/' + subreddit + '/' + sortMethod + '.json';
             
             if (after && pageUp)
@@ -49,9 +55,13 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
             return $http.get(url).
                 success(function (response) {
                     var imgs = processImages(response.data.children);
+                    
                     for (var i = 0; i < imgs.length; i++) {
-                        current.push(imgs[i].data);
+                            current.push(imgs[i].data);
                     }
+                    
+                    console.log(current);
+                    
                     after = '?after=' + imgs[imgs.length-1].data.name;
                     loading = false;
                 });
