@@ -11,7 +11,7 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
         processImages = function (data) {
             for (var i = 0; i < data.length; i++) {
                 var post = data[i].data,
-                    hasExt = (/\.(gif|jpg|jpeg|tiff|png)$/i).test(post.url);
+                    hasExt = (/\.(gif|gifv|jpg|jpeg|tiff|png)$/i).test(post.url);
                 //if it's a sticky post, don't display it.
                 if (post.stickied) {
                     data.splice(i,1);

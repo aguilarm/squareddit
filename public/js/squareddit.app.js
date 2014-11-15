@@ -21,7 +21,7 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
         processImages = function (data) {
             for (var i = 0; i < data.length; i++) {
                 var post = data[i].data,
-                    hasExt = (/\.(gif|jpg|jpeg|tiff|png)$/i).test(post.url);
+                    hasExt = (/\.(gif|gifv|jpg|jpeg|tiff|png)$/i).test(post.url);
                 //if it's a sticky post, don't display it.
                 if (post.stickied) {
                     data.splice(i,1);
@@ -82,8 +82,8 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
 }]);
 'use strict';
 
-squareddit.controller('listPosts', ['$scope', 'posts',
-    function ($scope, posts) {
+squareddit.controller('listPosts', ['$scope', '$document', 'posts',
+    function ($scope, $document, posts) {
         var postsLength = document.getElementById('sr-posts').offsetHeight,
             winH = window.innerHeight,
             halfWinH = winH/2,
@@ -99,7 +99,25 @@ squareddit.controller('listPosts', ['$scope', 'posts',
                 
         }, 300);
         
-        
+        $document.on('keydown', function(e) {
+            console.log(e);
+            if (e.keyCode === 40) {
+                e.preventDefault();
+                window.scrollBy(0,winH);
+            }
+            if (e.keyCode === 38) {
+                e.preventDefault();
+                window.scrollBy(0,-winH);
+            }
+            if (e.keyCode === 37) {
+                e.preventDefault();
+                window.scrollBy(0, -winH);
+            }
+            if (e.keyCode === 39) {
+                e.preventDefault();
+                window.scrollBy(0, winH);
+            }
+        });
         
         
             
@@ -151,7 +169,7 @@ squareddit.directive('backimg', function(){
     return function(scope, element, attrs){
         var url = attrs.backimg; 
         
-        if (!(/\.(gif|jpg|jpeg|tiff|png)$/i).test(url)) {
+        if (!(/\.(gif|gifv|jpg|jpeg|tiff|png)$/i).test(url)) {
             element.css({'background-color':'#000'});
             return;
         }

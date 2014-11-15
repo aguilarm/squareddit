@@ -82,6 +82,18 @@ body {background-color:#000;}
 }
 
 /*==================================
+    Sidebar Styles
+====================================*/
+.sr-menu-main {
+    text-align:center;
+}
+
+.sr-menu-main > input {
+    background-color:#000;
+    color:#fff;
+}
+
+/*==================================
     Content Styles
 ====================================*/
 
@@ -97,10 +109,12 @@ main {
 .sr-post {
     margin: auto;
     width:33.33%;
-    height: 66.66vh;
+    height: 100vh;
     position:relative;
+    overflow:hidden;
 }
-.sr-post > * {flex: 1 100%;transition: opacity,500ms;}
+
+.sr-post > .sr-post-title, .sr-post > .sr-post-vote, .sr-post > .sr-post-vote > * {flex: 1 100%;transition: opacity,500ms;}
 
 .sr-post-title {
     opacity: 0;
@@ -110,7 +124,7 @@ main {
     font-weight: bold;
     text-decoration: none;
     position:absolute;
-    bottom:0;
+    top:0;
     width:100%;
 }
 
