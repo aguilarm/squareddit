@@ -49,7 +49,6 @@
 			var effect = 'sr-effect';
 
 			button.addEventListener( eventtype, function( ev ) {
-				console.log('click/tap');
 				ev.stopPropagation();
 				ev.preventDefault();
 				setTimeout( function() {
