@@ -12,9 +12,10 @@ squareddit.factory('ids', function idsFactory() {
 
 squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
     var current = [],
-        currentSub = 'cityporn',
+        currentSub = 'CityPorn',
         loading = false,
         after,
+        error = '',
         processImgur = function (data) {
             return;
         },
@@ -63,14 +64,28 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
                             current.push(imgs[i].data);
                     }
                     
+                    if (current.length === 0) {
+                        error = "No images or bad subreddit!";
+                        console.log('error');
+                        loading = false;
+                        return error;
+                    }
+                    console.log(response.data.children);
+                    console.log(response.data.children.filter(processImages));
                     console.log(current);
-                    
-                    after = '?after=' + imgs[imgs.length-1].data.name;
+                    console.log(imgs);
+                    after = '?after=' + current[current.length-1].name;
                     loading = false;
+                }).
+                error(function (data, status) {
+                    error = "Request failed - error communicating with reddit.";
+                    loading = false;
+                    return error;
                 });
         },
         current: current,
         currentSub: currentSub,
+        error: error,
     };
 }]);
 'use strict';
