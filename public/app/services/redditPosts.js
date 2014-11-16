@@ -34,8 +34,9 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
             if (!sortMethod) 
                 sortMethod = 'hot';
             
-            if (subreddit != currentSub) {
+            if (subreddit.toLowerCase() != currentSub.toLowerCase()) {
                 var blank=[];
+                console.log('Assuming new subreddit!');
                 angular.copy(blank, current);
             }
             
@@ -51,20 +52,17 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
                     var imgs = response.data.children.filter(processImages);
                     
                     for (var i = 0; i < imgs.length; i++) {
-                            current.push(imgs[i].data);
+                        current.push(imgs[i].data);
                     }
                     
                     if (current.length === 0) {
                         error = "No images or bad subreddit!";
-                        console.log('error');
+                        console.log('Error loading reddit page!');
                         loading = false;
                         return error;
                     }
-                    console.log(response.data.children);
-                    console.log(response.data.children.filter(processImages));
-                    console.log(current);
-                    console.log(imgs);
-                    after = '?after=' + current[current.length-1].name;
+                    
+                    after = '?after=' + imgs[imgs.length-1].data.name;
                     loading = false;
                 }).
                 error(function (data, status) {

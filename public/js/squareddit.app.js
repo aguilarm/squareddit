@@ -44,8 +44,9 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
             if (!sortMethod) 
                 sortMethod = 'hot';
             
-            if (subreddit != currentSub) {
+            if (subreddit.toLowerCase() != currentSub.toLowerCase()) {
                 var blank=[];
+                console.log('Assuming new subreddit!');
                 angular.copy(blank, current);
             }
             
@@ -61,20 +62,17 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
                     var imgs = response.data.children.filter(processImages);
                     
                     for (var i = 0; i < imgs.length; i++) {
-                            current.push(imgs[i].data);
+                        current.push(imgs[i].data);
                     }
                     
                     if (current.length === 0) {
                         error = "No images or bad subreddit!";
-                        console.log('error');
+                        console.log('Error loading reddit page!');
                         loading = false;
                         return error;
                     }
-                    console.log(response.data.children);
-                    console.log(response.data.children.filter(processImages));
-                    console.log(current);
-                    console.log(imgs);
-                    after = '?after=' + current[current.length-1].name;
+                    
+                    after = '?after=' + imgs[imgs.length-1].data.name;
                     loading = false;
                 }).
                 error(function (data, status) {
@@ -102,10 +100,9 @@ squareddit.controller('listPosts', ['$scope', '$document', 'posts',
             scrollPosBottom = window.pageYOffset + winH;
             postsLength = document.getElementById('sr-posts').offsetHeight;
             threshold = postsLength - winH;
-            if (scrollPosBottom >= threshold)
+            if (scrollPosBottom >= threshold && threshold > winH*0.8)
                 posts.getPosts(posts.currentSub, 'hot', true);
-                
-        }, 300);
+        }, 500);
         
         $document.on('keydown', function(e) {
             console.log(e);
@@ -149,6 +146,10 @@ squareddit.config([
             .state('home', {
                 url: '/',
                 views: {
+                    'statusbar': {
+                        templateUrl: '/app/views/statusbar/home.html',
+                        controller: 'menuControls'
+                    },
                     'content': {
                         templateUrl: '/app/views/home.html',
                         controller: 'listPosts'

@@ -12,10 +12,9 @@ squareddit.controller('listPosts', ['$scope', '$document', 'posts',
             scrollPosBottom = window.pageYOffset + winH;
             postsLength = document.getElementById('sr-posts').offsetHeight;
             threshold = postsLength - winH;
-            if (scrollPosBottom >= threshold)
+            if (scrollPosBottom >= threshold && threshold > winH*0.8)
                 posts.getPosts(posts.currentSub, 'hot', true);
-                
-        }, 300);
+        }, 500);
         
         $document.on('keydown', function(e) {
             console.log(e);

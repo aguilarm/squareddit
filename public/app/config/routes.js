@@ -7,6 +7,10 @@ squareddit.config([
             .state('home', {
                 url: '/',
                 views: {
+                    'statusbar': {
+                        templateUrl: '/app/views/statusbar/home.html',
+                        controller: 'menuControls'
+                    },
                     'content': {
                         templateUrl: '/app/views/home.html',
                         controller: 'listPosts'
