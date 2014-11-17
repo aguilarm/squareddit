@@ -62,9 +62,6 @@ body {font-family:Roboto, sans-serif; background-color:#000;}
     position: relative;
     left: 3vw;
 }
-.sr-menu-main input {
-    color: black;
-}
 .sr-menu-pullbar {
     position:relative;
     left:3vw;
@@ -115,7 +112,9 @@ body {font-family:Roboto, sans-serif; background-color:#000;}
 .sr-menu-main {
     text-align:center;
 }
-
+.sr-menu-main > select {
+    background-color:#000;
+}
 .sr-menu-main > input {
     background-color:#000;
     color:#fff;

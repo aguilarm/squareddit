@@ -3,7 +3,11 @@
 
 <small>current subreddit, click to change:</small><br>
 
-<input ng-model="posts.current.sub" placeholder="Subreddit">
+<input ng-model="posts.current.sub" class="text-capitalize" placeholder="Subreddit"><br><br>
+
+<small>Sort by:</small><br>
+<select ng-model="posts.sortMethod" ng-options="method for method in sortMethods">
+</select><br><br>
 
 <button ng-click="updatePosts()" class="btn btn-primary">Update Posts</button>
 
