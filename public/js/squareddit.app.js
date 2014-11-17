@@ -3,16 +3,12 @@
 //define and start up the application
 
 var squareddit = angular.module('squareddit', ['ui.router']);
-squareddit.factory('ids', function idsFactory() {
-    return {
-        imgurID: '61fb2e136eeaa2c'
-    };
-});
+
 'use strict';
 
-squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
+squareddit.factory('posts', ['$http', function postsFactory($http) {
     var current = [],
-        currentSub = 'CityPorn',
+        currentSort = 'hot',
         loading = false,
         after,
         error = '',
@@ -25,6 +21,15 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
                 
             if(post.stickied)
                 return;
+                
+            console.log(post.url.substring(0,5));
+            if(post.url.substring(0,5) === "http:") {
+                post.url.replace('http:', 'https');
+                console.log('!');
+            }
+                
+                
+            console.log(post.url.substring(0,6));
                 
             //imgur will grab the right image regardless of format
             if(post.domain.search("imgur") >= 0 && hasExt === false)
@@ -44,15 +49,15 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
             if (!sortMethod) 
                 sortMethod = 'hot';
             
-            if (subreddit.toLowerCase() != currentSub.toLowerCase()) {
+            currentSort = sortMethod;
+            current.sub = subreddit;
+            
+            if (subreddit.toLowerCase() != current.sub.toLowerCase()) {
                 var blank=[];
-                console.log('Assuming new subreddit!');
                 angular.copy(blank, current);
             }
             
-            currentSub = subreddit;
-            
-            var url = 'http://www.reddit.com/r/' + subreddit + '/' + sortMethod + '.json';
+            var url = 'https://www.reddit.com/r/' + subreddit + '/' + sortMethod + '.json';
             
             if (after && pageUp)
                 url += after;
@@ -82,7 +87,7 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
                 });
         },
         current: current,
-        currentSub: currentSub,
+        currentSort: currentSort,
         error: error,
     };
 }]);
@@ -105,7 +110,6 @@ squareddit.controller('listPosts', ['$scope', '$document', 'posts',
         }, 500);
         
         $document.on('keydown', function(e) {
-            console.log(e);
             if (e.keyCode === 40) {
                 e.preventDefault();
                 window.scrollBy(0,winH);
@@ -134,7 +138,7 @@ squareddit.controller('menuControls', ['$scope', 'posts',
     function ($scope, posts) {
         $scope.posts = posts;
         $scope.updatePosts = function () {
-            posts.getPosts(posts.currentSub, 'hot');
+            posts.getPosts(posts.current.sub, 'hot');
         };
 }]);
 squareddit.config([
@@ -161,7 +165,29 @@ squareddit.config([
                 },
                 resolve: {
                     post: ['posts', function (posts) {
-                        return posts.getPosts('cityporn', 'hot', false);
+                        return posts.getPosts('cityPorn', 'hot', false);
+                    }]
+                }
+            })
+            .state('subreddit', {
+                url: '/r/:subreddit',
+                views: {
+                    'statusbar': {
+                        templateUrl: 'app/views/statusbar/home.html',
+                        controller: 'menuControls'
+                    },
+                    'content': {
+                        templateUrl: 'app/views/home.html',
+                        controller: 'listPosts'
+                    },
+                    'menu': {
+                        templateUrl: 'app/views/menu/home.html',
+                        controller: 'menuControls'
+                    }
+                },
+                resolve: {
+                    post: ['$stateParams', 'posts', function ($stateParams, posts) {
+                        return posts.getPosts($stateParams.subreddit, 'hot', false);
                     }]
                 }
         });
@@ -169,8 +195,7 @@ squareddit.config([
         $urlRouterProvider.otherwise('/');
         
         $locationProvider.html5Mode({
-            enabled: true,
-            requireBase: false
+            enabled: true
         });
         
 }]);

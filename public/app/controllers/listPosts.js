@@ -17,7 +17,6 @@ squareddit.controller('listPosts', ['$scope', '$document', 'posts',
         }, 500);
         
         $document.on('keydown', function(e) {
-            console.log(e);
             if (e.keyCode === 40) {
                 e.preventDefault();
                 window.scrollBy(0,winH);

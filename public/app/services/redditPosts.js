@@ -1,8 +1,8 @@
 'use strict';
 
-squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
+squareddit.factory('posts', ['$http', function postsFactory($http) {
     var current = [],
-        currentSub = 'CityPorn',
+        currentSort = 'hot',
         loading = false,
         after,
         error = '',
@@ -15,6 +15,15 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
                 
             if(post.stickied)
                 return;
+                
+            console.log(post.url.substring(0,5));
+            if(post.url.substring(0,5) === "http:") {
+                post.url.replace('http:', 'https');
+                console.log('!');
+            }
+                
+                
+            console.log(post.url.substring(0,6));
                 
             //imgur will grab the right image regardless of format
             if(post.domain.search("imgur") >= 0 && hasExt === false)
@@ -34,15 +43,15 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
             if (!sortMethod) 
                 sortMethod = 'hot';
             
-            if (subreddit.toLowerCase() != currentSub.toLowerCase()) {
+            currentSort = sortMethod;
+            current.sub = subreddit;
+            
+            if (subreddit.toLowerCase() != current.sub.toLowerCase()) {
                 var blank=[];
-                console.log('Assuming new subreddit!');
                 angular.copy(blank, current);
             }
             
-            currentSub = subreddit;
-            
-            var url = 'http://www.reddit.com/r/' + subreddit + '/' + sortMethod + '.json';
+            var url = 'https://www.reddit.com/r/' + subreddit + '/' + sortMethod + '.json';
             
             if (after && pageUp)
                 url += after;
@@ -72,7 +81,7 @@ squareddit.factory('posts', ['$http', 'ids', function postsFactory($http, ids) {
                 });
         },
         current: current,
-        currentSub: currentSub,
+        currentSort: currentSort,
         error: error,
     };
 }]);

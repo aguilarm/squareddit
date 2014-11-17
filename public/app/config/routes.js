@@ -22,7 +22,29 @@ squareddit.config([
                 },
                 resolve: {
                     post: ['posts', function (posts) {
-                        return posts.getPosts('cityporn', 'hot', false);
+                        return posts.getPosts('cityPorn', 'hot', false);
+                    }]
+                }
+            })
+            .state('subreddit', {
+                url: '/r/:subreddit',
+                views: {
+                    'statusbar': {
+                        templateUrl: 'app/views/statusbar/home.html',
+                        controller: 'menuControls'
+                    },
+                    'content': {
+                        templateUrl: 'app/views/home.html',
+                        controller: 'listPosts'
+                    },
+                    'menu': {
+                        templateUrl: 'app/views/menu/home.html',
+                        controller: 'menuControls'
+                    }
+                },
+                resolve: {
+                    post: ['$stateParams', 'posts', function ($stateParams, posts) {
+                        return posts.getPosts($stateParams.subreddit, 'hot', false);
                     }]
                 }
         });
@@ -30,8 +52,7 @@ squareddit.config([
         $urlRouterProvider.otherwise('/');
         
         $locationProvider.html5Mode({
-            enabled: true,
-            requireBase: false
+            enabled: true
         });
         
 }]);
