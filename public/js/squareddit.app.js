@@ -9,6 +9,7 @@ var squareddit = angular.module('squareddit', ['ui.router']);
 squareddit.factory('posts', ['$http', function postsFactory($http) {
     var current = [],
         currentSort = 'hot',
+        cachedSubreddit,
         loading = false,
         after,
         error = '',
@@ -22,14 +23,11 @@ squareddit.factory('posts', ['$http', function postsFactory($http) {
             if(post.stickied)
                 return;
                 
-            console.log(post.url.substring(0,5));
             if(post.url.substring(0,5) === "http:") {
-                post.url.replace('http:', 'https');
+                post.url.replace("http:", "https:");
+                console.log(post.url);
                 console.log('!');
             }
-                
-                
-            console.log(post.url.substring(0,6));
                 
             //imgur will grab the right image regardless of format
             if(post.domain.search("imgur") >= 0 && hasExt === false)
@@ -48,14 +46,25 @@ squareddit.factory('posts', ['$http', function postsFactory($http) {
             
             if (!sortMethod) 
                 sortMethod = 'hot';
-            
+            if (!cachedSubreddit)
+                cachedSubreddit = current.sub;
+            console.log(cachedSubreddit);
             currentSort = sortMethod;
-            current.sub = subreddit;
+            console.log(subreddit);
+            console.log(current.sub);
+            if (!subreddit)
+                subreddit = current.sub;
+            if (!current.sub)
+                current.sub = subreddit;
             
-            if (subreddit.toLowerCase() != current.sub.toLowerCase()) {
-                var blank=[];
-                angular.copy(blank, current);
+            if(cachedSubreddit) {
+                if (cachedSubreddit.toLowerCase() != current.sub.toLowerCase()) {
+                    var blank=[];
+                    angular.copy(blank, current);
+                }
             }
+            
+            cachedSubreddit = subreddit;
             
             var url = 'https://www.reddit.com/r/' + subreddit + '/' + sortMethod + '.json';
             
