@@ -7,5 +7,5 @@ That is done on the most basic level, but I plan on extending functionality to m
 
 Here are some snapshots of recent progress:
 (11/18/2014)
-<img src="img/squareddit11182014.png">
-<img src="img/squareddit11182014.png">
+<img src="https://raw.githubusercontent.com/aguilarm/squareddit/master/imgs/squareddit11182014.png" width="500">
+<img src="https://raw.githubusercontent.com/aguilarm/squareddit/master/imgs/squareddit11182014menu.png" width="500">
