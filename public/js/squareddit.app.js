@@ -26,9 +26,8 @@ squareddit.factory('posts', ['$http', function postsFactory($http) {
                 return;
                 
             if(post.url.substring(0,5) === "http:") {
-                post.url.replace("http:", "https:");
-                console.log(post.url);
-                console.log('!');
+                var https = post.url.replace("http:", "https:");
+                post.url = https;
             }
                 
             //imgur will grab the right image regardless of format
@@ -224,7 +223,9 @@ squareddit.directive('backimg', function(){
     return function(scope, element, attrs){
         var url = attrs.backimg; 
         
+        //url is not an image:
         if (!(/\.(gif|gifv|jpg|jpeg|tiff|png)$/i).test(url)) {
+            //TODO make an error image rather than this
             element.css({'background-color':'#000'});
             return;
         }

@@ -18,9 +18,8 @@ squareddit.factory('posts', ['$http', function postsFactory($http) {
                 return;
                 
             if(post.url.substring(0,5) === "http:") {
-                post.url.replace("http:", "https:");
-                console.log(post.url);
-                console.log('!');
+                var https = post.url.replace("http:", "https:");
+                post.url = https;
             }
                 
             //imgur will grab the right image regardless of format
