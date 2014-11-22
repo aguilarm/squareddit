@@ -3,7 +3,9 @@
 //define and start up the application
 
 var squareddit = angular.module('squareddit', ['ui.router']);
-
+squareddit.factory('auth', ['$http', function authFactory($http) {
+    
+}]);
 'use strict';
 
 squareddit.factory('posts', ['$http', function postsFactory($http) {

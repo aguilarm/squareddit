@@ -2,4 +2,10 @@
 
 Decided to have a go at using the Reddit API and Angular to make a web application.
 
-Goal is just to make each post appear in a square on the main page, with the post photo behind it and have easy to use up/downvote buttons and I'll add functionality from that starting point.
+Originally, I had kind of a showerthought that having reddit posts displayed as a grid of images would be pretty cool so I made this.
+That is done on the most basic level, but I plan on extending functionality to make sort of a mini-reddit with most of the same features as the regular site.
+
+Here are some snapshots of recent progress:
+(11/18/2014)
+<img src="img/squareddit11182014.png">
+<img src="img/squareddit11182014.png">
