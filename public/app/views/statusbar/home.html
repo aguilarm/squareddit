@@ -1,3 +1,6 @@
-<div class="sr-login"><small>Not logged in! <a ng-click="login()">Login now.</a></small></div>
+<div class="sr-login">
+    <small ng-if="!auth.loggedIn">Not logged in! <a ng-click="login()">Login now.</a></small>
+    <small ng-if="auth.loggedIn">Logged in as {{auth.user.name}}</small>
+</div>
 
 <div class="text-center"><small>Currently Viewing: </small>/r/<span class="text-capitalize">{{posts.current.sub}}<small> Showing: {{posts.currentSort}} Posts</small></span></div>

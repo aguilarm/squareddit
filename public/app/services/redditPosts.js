@@ -41,10 +41,9 @@ squareddit.factory('posts', ['$http', function postsFactory($http) {
                 sortMethod = 'hot';
             if (!cachedSubreddit)
                 cachedSubreddit = current.sub;
-            console.log(cachedSubreddit);
+                
             currentSort = sortMethod;
-            console.log(subreddit);
-            console.log(current.sub);
+            
             if (!subreddit)
                 subreddit = current.sub;
             if (!current.sub)

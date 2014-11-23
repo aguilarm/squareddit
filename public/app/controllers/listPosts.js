@@ -8,6 +8,7 @@ squareddit.controller('listPosts', ['$scope', '$document', 'posts', 'auth',
             scrollPosBottom,
             threshold;
         $scope.posts = posts;
+        $scope.auth = auth;
         
         setInterval(function() {
             scrollPosBottom = window.pageYOffset + winH;
@@ -20,7 +21,7 @@ squareddit.controller('listPosts', ['$scope', '$document', 'posts', 'auth',
         $scope.vote = function ($event) {
             $event.preventDefault();
             $event.stopPropagation();
-            if (auth.loggedIn === 0) {
+            if (auth.loggedIn === false) {
                 alert('You must be logged in to do that!');
                 return;
             }

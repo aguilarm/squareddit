@@ -4,9 +4,25 @@
 
 var squareddit = angular.module('squareddit', ['ui.router']);
 squareddit.factory('auth', ['$http', function authFactory($http) {
-    var auth = {};
-    auth.loggedIn = 0;
-    return auth;
+    var auth = {},
+        user,
+        loggedIn;
+    
+    return {
+        getUser: function getUser() {
+            return $http.get("https://www.reddit.com/api/me.json").
+                success(function (response) {
+                    loggedIn = true;
+                    user = response.data;
+                    console.log('user');
+                }).
+                error(function (data, status) {
+                    loggedIn = false;
+                    console.log("log in failed");
+                }); 
+        },
+        user: user
+    };
 }]);
 'use strict';
 
@@ -51,10 +67,9 @@ squareddit.factory('posts', ['$http', function postsFactory($http) {
                 sortMethod = 'hot';
             if (!cachedSubreddit)
                 cachedSubreddit = current.sub;
-            console.log(cachedSubreddit);
+                
             currentSort = sortMethod;
-            console.log(subreddit);
-            console.log(current.sub);
+            
             if (!subreddit)
                 subreddit = current.sub;
             if (!current.sub)
@@ -113,6 +128,7 @@ squareddit.controller('listPosts', ['$scope', '$document', 'posts', 'auth',
             scrollPosBottom,
             threshold;
         $scope.posts = posts;
+        $scope.auth = auth;
         
         setInterval(function() {
             scrollPosBottom = window.pageYOffset + winH;
@@ -125,7 +141,7 @@ squareddit.controller('listPosts', ['$scope', '$document', 'posts', 'auth',
         $scope.vote = function ($event) {
             $event.preventDefault();
             $event.stopPropagation();
-            if (auth.loggedIn === 0) {
+            if (auth.loggedIn === false) {
                 alert('You must be logged in to do that!');
                 return;
             }
@@ -199,6 +215,9 @@ squareddit.config([
                 resolve: {
                     post: ['posts', function (posts) {
                         return posts.getPosts('cityPorn', 'hot', false);
+                    }],
+                    login: ['auth', function (auth) {
+                        return auth.getUser();
                     }]
                 }
             })
