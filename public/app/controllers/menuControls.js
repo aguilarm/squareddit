@@ -19,6 +19,12 @@ squareddit.controller('menuControls', ['$scope', 'posts', 'auth',
         };
         
         $scope.logIn = function menuLogIn(user, pass, rem) {
+            if(!user || !pass) {
+                alert('Username and password required!');
+                return;
+            }
+            
+            auth.showLogin = false;
             auth.logIn(user, pass, rem);
         }
 }]);

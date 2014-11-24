@@ -6,7 +6,7 @@
 <div class="text-center"><small>Currently Viewing: </small>/r/<span class="text-capitalize">{{posts.current.sub}}<small> Showing: {{posts.currentSort}} Posts</small></span></div>
 
 <div class="sr-status-login" ng-show="auth.showLogin">
-    <form ng-submit="logIn">
+    <form ng-submit="logIn(user, pass)">
         <p>Log In to Reddit:</p>
         <div class="form-group">
             <input type="text"
