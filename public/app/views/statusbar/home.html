@@ -1,6 +1,25 @@
-<div class="sr-login">
-    <small ng-if="!auth.loggedIn">Not logged in! <a ng-click="login()">Login now.</a></small>
+<div class="sr-status-loggedin">
+    <small ng-if="!auth.loggedIn">Not logged in! <a ng-click="auth.showLogin = !auth.showLogin">Login now.</a></small>
     <small ng-if="auth.loggedIn">Logged in as {{auth.user.name}}</small>
 </div>
 
 <div class="text-center"><small>Currently Viewing: </small>/r/<span class="text-capitalize">{{posts.current.sub}}<small> Showing: {{posts.currentSort}} Posts</small></span></div>
+
+<div class="sr-status-login" ng-show="auth.showLogin">
+    <form ng-submit="logIn">
+        <p>Log In to Reddit:</p>
+        <div class="form-group">
+            <input type="text"
+                class="form-control"
+                placeholder="Reddit Username"
+                ng-model="user">
+        </div>
+        <div class="form-group">
+            <input type="password"
+                class="form-control"
+                placeholder="Reddit Password"
+                ng-model="pass">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</div>
