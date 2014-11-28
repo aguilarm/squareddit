@@ -10,14 +10,32 @@ squareddit.factory('auth', ['$http', function authFactory($http) {
                 return;
             }
             
-            var url = 'https://www.reddit.com/api/login?api_type=\'json\'?user='+user+'?passwd='+pass;
+            var url = 'https://www.reddit.com/api/login',
+                creds = { 
+                    'user': user,
+                    'passwd': pass,
+                    'api_type': 'json',
+                    'rem': 0,
+                },
+                req = {
+                    method: 'POST',
+                    url: url,
+                    headers: {
+                        'user-agent': 'Squareddit Early by Thyrst'
+                    },
+                    data: creds
+                };
+                
+            
             
             if (rem)
-                url += '?rem=\'true\'';
+                req.data.creds.rem = 1;
             
-            return $http.post(url).
+            return $http(req).
                 success(function (data) {
                     console.log(data);
+                }).error(function () {
+                    console.log('Unable to login!');
                 });
         },
         getUser: function getUser() {
