@@ -44,7 +44,7 @@ squareddit.factory('auth', ['$http', function authFactory($http) {
                 });
         },
         getUser: function getUser() {
-            return $http.get('https://www.reddit.com/api/me.json').
+            return $http.get('/login').
                 success(function (data) {
                     if (data.length) {
                         loggedIn = true;

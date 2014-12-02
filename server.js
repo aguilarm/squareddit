@@ -1,7 +1,8 @@
 var express = require('express'),
     path = require('path'),
     swig = require('swig'),
-    app = express();
+    app = express(),
+    auth = require('./routes/auth.js');
     
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
@@ -10,6 +11,8 @@ app.set('views', (__dirname, 'views'));
 app.use('/js', express.static(__dirname + '/public/js'));
 app.use('/css', express.static(__dirname + '/public/css'));
 app.use('/app', express.static(__dirname + '/public/app'));
+
+app.use('/auth', auth);
 
 app.all('/*', function (req, res, next) {
     res.sendFile('views/index.html', { root: (__dirname) });
@@ -45,6 +48,6 @@ var server = app.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + server.address().port);
     console.log(process.env.IP);
     if (app.get('env') === 'development') {
-        console.log('RUNNING IN DEV MODE');
+        console.log(app.get('env'));
     }
 });
