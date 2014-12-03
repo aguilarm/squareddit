@@ -3,6 +3,8 @@ var express = require('express'),
     swig = require('swig'),
     app = express(),
     auth = require('./routes/auth.js');
+
+app.use(morgan('dev'));
     
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
@@ -17,8 +19,6 @@ app.use('/auth', auth);
 app.all('/*', function (req, res, next) {
     res.sendFile('views/index.html', { root: (__dirname) });
 });
-
-app.use(morgan('dev'));
 
 app.use(function (req, res, next) {
     var err = new Error('Not Found');

@@ -4,4 +4,4 @@ node_modules
 
 npm-debug.log
 
-ids.js
+config/constants.js

@@ -2,7 +2,14 @@ var express = require('express'),
     app = express();
 
 app.get('/login', function (req, res, next) {
-    console.log(req);
+    var user = req.body.user,
+        pass = req.body.pass,
+        rem = req.body.rem;
+    
+    
+    
+        
+    
     res.send("Check console");
 });
 
