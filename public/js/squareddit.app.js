@@ -15,7 +15,7 @@ squareddit.factory('auth', ['$http', function authFactory($http) {
                 return;
             }
             
-            var url = 'https://www.reddit.com/api/login',
+            var url = 'https://www.reddit.com/api/login?app=squareddit',
                 creds = { 
                     'user': user,
                     'passwd': pass,
@@ -26,7 +26,7 @@ squareddit.factory('auth', ['$http', function authFactory($http) {
                     method: 'POST',
                     url: url,
                     headers: {
-                        'user-agent': 'Squareddit Early by Thyrst'
+                        'User-Agent': 'Squareddit Early by Thyrst'
                     },
                     data: creds
                 };
@@ -44,7 +44,7 @@ squareddit.factory('auth', ['$http', function authFactory($http) {
                 });
         },
         getUser: function getUser() {
-            return $http.get('/login').
+            return $http.get('/auth/user').
                 success(function (data) {
                     if (data.length) {
                         loggedIn = true;

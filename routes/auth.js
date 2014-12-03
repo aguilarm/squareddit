@@ -1,13 +1,17 @@
 var express = require('express'),
-    router = express.Router();
+    app = express();
 
-router.get('/login', function (req, res, next) {
+app.get('/login', function (req, res, next) {
     console.log(req);
-    res.send("Check console"); 
+    res.send("Check console");
 });
 
-router.get('/*', function (req, res, next) {
+app.get('/user', function (req, res, next) {
+    res.send('potato');
+});
+
+app.get('/*', function (req, res, next) {
     res.send("Hello world");
 });
 
-module.exports = router;
+module.exports = app;

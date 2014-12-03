@@ -1,5 +1,5 @@
 var express = require('express'),
-    path = require('path'),
+    morgan = require('morgan'),
     swig = require('swig'),
     app = express(),
     auth = require('./routes/auth.js');
@@ -18,6 +18,8 @@ app.all('/*', function (req, res, next) {
     res.sendFile('views/index.html', { root: (__dirname) });
 });
 
+app.use(morgan('dev'));
+
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
@@ -32,15 +34,16 @@ if (app.get('env') === 'development') {
             error: err
         });
     });
+} else {
+    app.use(function (err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: {}
+        });
+    });
 }
 
-app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
-});
 
 app.set('port', process.env.PORT || 3000);
 
