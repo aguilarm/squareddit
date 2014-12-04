@@ -3,8 +3,8 @@ var express = require('express'),
     swig = require('swig'),
     crypto = require('crypto'),
     app = express(),
-    authRoute = require('./routes/auth.js'),
-    redditPassport = require('./controllers/passport.js');
+    authRoute = require('./app/routes/auth.js'),
+    redditPassport = require('./app/controllers/passport.js');
 
 app.use(morgan('dev'));
 

@@ -4,4 +4,7 @@ node_modules
 
 npm-debug.log
 
-config/redditConfig.js
+redditConfig.js
+
+data
+mongod
