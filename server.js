@@ -1,11 +1,16 @@
 var express = require('express'),
     morgan = require('morgan'),
     swig = require('swig'),
+    crypto = require('crypto'),
     app = express(),
-    auth = require('./routes/auth.js');
+    authRoute = require('./routes/auth.js'),
+    redditPassport = require('./controllers/passport.js');
 
 app.use(morgan('dev'));
-    
+
+app.use(redditPassport.initialize());
+app.use(redditPassport.session());
+
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
 app.set('views', (__dirname, 'views'));
@@ -14,7 +19,7 @@ app.use('/js', express.static(__dirname + '/public/js'));
 app.use('/css', express.static(__dirname + '/public/css'));
 app.use('/app', express.static(__dirname + '/public/app'));
 
-app.use('/auth', auth);
+app.use('/auth', authRoute);
 
 app.all('/*', function (req, res, next) {
     res.sendFile('views/index.html', { root: (__dirname) });

@@ -1,9 +1,6 @@
-var express = require('express'),
-    passport = require('passport'),
-    util = require('util'),
-    crypto = require('crypto'),
+var passport = require('passport'),
     RedditStrategy = require('passport-reddit').Strategy,
-    redditConfig = require('config/redditConfig.js');
+    redditConfig = require('../config/redditConfig.js');
 
 passport.serializeUser(function (user, done) {
     done(null, user);
@@ -12,7 +9,11 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (obj, done) {
     done(null, obj);
 });
-   
+
+if (!redditConfig) {
+    throw "This app requires '../config/redditConfig.js' to return redditconfig.REDDIT_CONSUMER_KEY, .REDDIT_CONSUMER_SECRET, and .CALLBACK_URL!";
+}
+
 passport.use(new RedditStrategy({
     clientID: redditConfig.REDDIT_CONSUMER_KEY,
     clientSecret: redditConfig.REDDIT_CONSUMER_SECRET,
