@@ -1,6 +1,7 @@
 @import url(//fonts.googleapis.com/css?family=Roboto);
 
 html, body, sr-container, sr-pusher, sr-content { height: 100%; }
+
 body {font-family:Roboto, sans-serif; background-color:#000;}
 
 /*==================================
@@ -104,7 +105,6 @@ body {font-family:Roboto, sans-serif; background-color:#000;}
 /*==================================
     Status Bar Styles
 ====================================*/
-
 .sr-statusbar {
     position:fixed;
     top:0;
@@ -132,20 +132,6 @@ body {font-family:Roboto, sans-serif; background-color:#000;}
 
 .sr-status-loggedin a {
     cursor: pointer;
-}
-
-.sr-status-login.ng-hide {
-    right:-400px;
-    transition: transform 200ms;
-}
-
-.sr-status-login {
-    display:block;
-    position:absolute;
-    padding:1em;
-    background-color:#000;
-    right: 0px;
-    transition: transform 200ms;
 }
 
 /*==================================

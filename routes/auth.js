@@ -2,10 +2,11 @@ var express = require('express'),
     passport = require('passport'),
     session = require('express-session'),
     crypto = require('crypto'),
-    app = express();
-
+    app = express(),
+    secret = require('../config/secret.js');
+    
 app.use(session({   
-    secret: 'potatosalad',
+    secret: secret.sessionSecret,
     saveUninitialized: true,
     resave: true
 }));
