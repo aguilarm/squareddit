@@ -22,7 +22,7 @@ function ensureAuthenticated(req, res, next) {
 app.get('/account', function (req, res, next) {
     console.log(req.user);
     
-    res.render('account', { user: req.user });
+    res.send(req.user);
 });
 
 app.get('/login', function (req, res, next) {

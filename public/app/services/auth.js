@@ -1,49 +1,15 @@
 squareddit.factory('auth', ['$http', function authFactory($http) {
     var user= [],
-        loggedIn = false,
+        loggedIn,
         showLogin;
     
     return {
-        logIn: function logIn(user, pass, rem) {
-            if (!user || !pass) {
-                console.log('Username and password required!');
-                return;
-            }
-            
-            var url = 'https://www.reddit.com/api/login?app=squareddit',
-                creds = { 
-                    'user': user,
-                    'passwd': pass,
-                    'api_type': 'json',
-                    'rem': 0,
-                },
-                req = {
-                    method: 'POST',
-                    url: url,
-                    headers: {
-                        'User-Agent': 'Squareddit Early by Thyrst'
-                    },
-                    data: creds
-                };
-                
-            
-            
-            if (rem)
-                req.data.creds.rem = 1;
-            
-            return $http(req).
-                success(function (data) {
-                    console.log(data);
-                }).error(function () {
-                    console.log('Unable to login!');
-                });
-        },
         getUser: function getUser() {
-            return $http.get('/auth/user').
+            return $http.get('/auth/account').
                 success(function (data) {
-                    if (data.length) {
+                    if (data.name) {
                         loggedIn = true;
-                        user = data.data;
+                        user = data._json;
                     } else {
                         loggedIn = false;
                     }

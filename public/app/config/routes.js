@@ -23,6 +23,9 @@ squareddit.config([
                 resolve: {
                     post: ['posts', function (posts) {
                         return posts.getPosts('cityPorn', 'hot', false);
+                    }],
+                    user: ['auth', function (auth) {
+                        return auth.getUser();
                     }]
                 }
             })
