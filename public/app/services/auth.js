@@ -1,30 +1,30 @@
 squareddit.factory('auth', ['$http', function authFactory($http) {
-    var user= [],
-        loggedIn,
-        showLogin;
+    var authServ = {};
     
-    return {
-        getUser: function getUser() {
+    authServ.loggedIn = false;
+    authServ.user = {};
+    authServ.showLogin = false;
+    
+    authServ.getUser = function getUser() {
             return $http.get('/auth/account').
                 success(function (data) {
                     if (data.name) {
-                        loggedIn = true;
-                        user = data._json;
+                        authServ.loggedIn = true;
+                        authServ.user = data._json;
                     } else {
-                        loggedIn = false;
+                        authServ.loggedIn = false;
                     }
                     
                     console.log(data);
-                    console.log(loggedIn);
+                    console.log(authServ.loggedIn);
                     
                 }).
                 error(function (data, status) {
-                    loggedIn = false;
+                    authServ.loggedIn = false;
                     console.log('log in check failed');
                 }); 
-        },
-        loggedIn: loggedIn,
-        showLogin: showLogin,
-        user: user,
-    };
+        };
+        
+    return authServ;
+    
 }]);

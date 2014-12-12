@@ -1,5 +1,5 @@
 <div class="sr-status-loggedin">
-    <small ng-if="!auth.loggedIn">Not logged in! <a href="/auth/reddit" target="_blank">Login with Reddit.</a></small>
+    <small ng-if="!auth.loggedIn">Not logged in! <a href="/auth/reddit" target="_self">Login with Reddit.</a></small>
     <small ng-if="auth.loggedIn">Logged in as {{auth.user.name}}</small>
 </div>
 
