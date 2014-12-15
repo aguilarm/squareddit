@@ -122,7 +122,7 @@ squareddit.factory('redditUser', ['$http', function usersFactory($http) {
     var userServ = {};
     
     userServ.vote = function vote(id, dir) {
-        return $http.post('http://www.reddit.com/api/vote',
+        return $http.post('/user/vote',
             {
                 id: id,
                 dir: dir
