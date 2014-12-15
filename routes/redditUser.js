@@ -40,7 +40,7 @@ app.get('/reddit/callback', function (req, res, next) {
     if (req.query.state == req.session.state) {
         passport.authenticate('reddit', {
             successRedirect: '/',
-            failureRedirect: '/login'
+            failureRedirect: '/'
         })(req,res,next);
     } else {
         next( new Error(403) );

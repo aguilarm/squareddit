@@ -3,7 +3,7 @@ var express = require('express'),
     swig = require('swig'),
     app = express(),
     mongoose = require('mongoose'),
-    authRoute = require('./routes/auth'),
+    userRoute = require('./routes/redditUser'),
     redditPassport = require('./controllers/passport');
 
 app.use(morgan('dev'));
@@ -28,7 +28,7 @@ app.use('/js', express.static(__dirname + '/public/js'));
 app.use('/css', express.static(__dirname + '/public/css'));
 app.use('/app', express.static(__dirname + '/public/app'));
 
-app.use('/auth', authRoute);
+app.use('/user', userRoute);
 
 app.all('/*', function (req, res, next) {
     res.sendFile('/views/index.html', { root: (__dirname) });

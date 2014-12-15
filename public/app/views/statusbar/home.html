@@ -1,6 +1,15 @@
 <div class="sr-status-loggedin">
-    <small ng-if="!auth.loggedIn">Not logged in! <a href="/auth/reddit" target="_self">Login with Reddit.</a></small>
-    <small ng-if="auth.loggedIn">Logged in as {{auth.user.name}}</small>
+    <small ng-if="!auth.loggedIn">Not logged in! <a href="/user/reddit" target="_self">Login with Reddit.</a></small>
+    <small ng-if="auth.loggedIn">Logged in as 
+        <strong>
+            {{auth.user.name}}
+        </strong>
+    </small>
 </div>
 
-<div class="text-center"><small>Currently Viewing: </small>/r/<span class="text-capitalize">{{posts.current.sub}}<small> Showing: {{posts.currentSort}} Posts</small></span></div>
+<div class="text-center">
+    <small>Currently Viewing: </small>
+    /r/<span class="text-capitalize">{{posts.current.sub}}
+        <small> Showing: {{posts.currentSort}} Posts</small>
+    </span>
+</div>

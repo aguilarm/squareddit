@@ -1,10 +1,10 @@
 'use strict';
 
-squareddit.controller('listPosts', ['$scope', '$document', 'posts', 'auth',
-    function ($scope, $document, posts, auth) {
+squareddit.controller('listPosts', [
+    '$scope', '$document', 'posts', 'auth', 'redditUser',
+    function ($scope, $document, posts, auth, redditUser) {
         var postsLength = document.getElementById('sr-posts').offsetHeight,
             winH = window.innerHeight,
-            halfWinH = winH/2,
             scrollPosBottom,
             threshold;
         $scope.posts = posts;
@@ -18,15 +18,31 @@ squareddit.controller('listPosts', ['$scope', '$document', 'posts', 'auth',
                 posts.getPosts(posts.currentSub, 'hot', true);
         }, 500);
         
-        $scope.vote = function ($event) {
+        $scope.vote = function ($event, postID, dir) {
+            var voteButton = $event.target;
+            
             $event.preventDefault();
             $event.stopPropagation();
+            
             if (auth.loggedIn === false) {
                 alert('You must be logged in to do that!');
                 return;
             }
+            //send a 0 (reset) dir if an active element is clicked
+            if (dir !== 0 && voteButton.className.indexOf('sr-post-voted')) {
+                console.log('reset');
+                redditUser.vote(postID, 0);
+                voteButton.className.replace(/\bsr-post-voted\b/, '');
+                return;
+            }
+            
+            console.log(postID);
+            console.log(voteButton);
+            console.log(voteButton.className);
+            
+            voteButton.className += ' sr-post-voted';
+            
         };
-        
         
         $document.on('keydown', function(e) {
             if (e.keyCode === 40) {

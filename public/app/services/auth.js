@@ -14,15 +14,11 @@ squareddit.factory('auth', ['$http', function authFactory($http) {
                     } else {
                         authServ.loggedIn = false;
                     }
-                    
-                    console.log(data);
-                    console.log(authServ.loggedIn);
-                    
                 }).
                 error(function (data, status) {
                     authServ.loggedIn = false;
                     console.log('log in check failed');
-                }); 
+                });
         };
         
     return authServ;
