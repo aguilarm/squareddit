@@ -2,6 +2,7 @@ var express = require('express'),
     passport = require('passport'),
     session = require('express-session'),
     bodyParser = require('body-parser'),
+    request = require('request'),
     crypto = require('crypto'),
     app = express(),
     secret = require('../config/secret.js');
@@ -32,6 +33,7 @@ app.get('/reddit', function (req, res, next) {
     req.session.state = crypto.randomBytes(32).toString('hex');
     passport.authenticate('reddit', {
         state: req.session.state,
+        scope: 'history,identity,mysubreddits,submit,read,vote'
     })(req, res, next);
 });
 
@@ -49,6 +51,13 @@ app.get('/reddit/callback', function (req, res, next) {
 app.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
+});
+
+app.post('/vote', function (req, res) {
+    var postId = req.body.id,
+        direction = req.body.dir;
+        
+    
 });
 
 module.exports = app;
