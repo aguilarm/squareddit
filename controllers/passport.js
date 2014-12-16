@@ -15,9 +15,9 @@ if (!secret) {
     throw "This app requires '../config/secret.js' to return secret.REDDIT_CONSUMER_KEY, .REDDIT_CONSUMER_SECRET, and .CALLBACK_URL!";
 }
 
-var User = Users.model('User');
+var Account = Users.model('User');
 
-passport.use(new RedditStrategy({
+passport.use('reddit-authz', new RedditStrategy({
     clientID: secret.REDDIT_CONSUMER_KEY,
     clientSecret: secret.REDDIT_CONSUMER_SECRET,
     callbackURL: secret.CALLBACK_URL
@@ -26,25 +26,42 @@ passport.use(new RedditStrategy({
         process.nextTick(function () {
             console.log(profile);
             
-            User.findOne({ uid: 'profile.id' }, 
-                function(err, user) {
+            Account.findOne({ uid: 'profile.id' }, 
+                function(err, account) {
                     if (err) { console.log(err) }
-                    if (user) { console.log('user found!') }
+                    if (account) { console.log('account found!') }
                     
-                    console.log('user not found, creating entry');
+                    console.log('account not found, creating entry');
                     
-                    var thisUser = new User();
-                    thisUser.uid = profile.id;
+                    account = new Account();
+                    account.uid = profile.id;
                     var t = [
                         { type: 'access', token: accessToken },
                         { type: 'refresh', token: refreshToken }
                     ];
-                    thisUser.tokens.push(t);
+                    account.tokens.push(t);
                     
-                    return done(null, thisUser);
+                    return done(null, account);
                 });
             //return done(null, profile);
         });
-    }));
+}));
+
+passport.use(new RedditStrategy({
+        clientID: secret.REDDIT_CONSUMER_KEY,
+        clientSecret: secret.REDDIT_CONSUMER_SECRET,
+        callbackURL: secret.CALLBACK_URL,
+        passReqToCallback: true
+    },
+    function (req, accessToken, refreshToken, user, done) {
+        if (!req.user) {
+            console.log('Not logged in!');
+            
+        } else {
+            console.log('Logged in!');
+            return done(null, req.user);
+        }
+}));
+
     
 module.exports = passport;
