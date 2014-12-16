@@ -1,15 +1,15 @@
 squareddit.factory('redditUser', ['$http', function usersFactory($http) {
     var userServ = {};
     
-    userServ.vote = function vote(id, dir) {
+    userServ.vote = function vote(postId, voteDir) {
         return $http.post('/user/vote',
             {
-                id: id,
-                dir: dir
+                id: postId,
+                dir: voteDir
             }).success(function (data) {
                 console.log('vote successful');
             }).error(function() {
-                console.log('vote for ' + id + ' unsuccessful!');
+                console.log('vote for ' + postId + ' unsuccessful!');
             });
     };
     

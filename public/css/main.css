@@ -188,5 +188,5 @@ main {
 
 .sr-post:hover .sr-post-title {opacity:0.7;}
 .sr-post:hover .sr-post-vote {opacity:0.3;}
-.sr-post:hover .sr-post-voted {opacity:0.7;}
+.sr-post:hover .sr-post-voted {opacity:0.8;}
 .sr-post:hover .sr-post-vote:hover {opacity:0.9;}

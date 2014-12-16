@@ -11,7 +11,7 @@ squareddit.factory('auth', ['$http', function authFactory($http) {
     authServ.showLogin = false;
     
     authServ.getUser = function getUser() {
-            return $http.get('/auth/account').
+            return $http.get('/user/account').
                 success(function (data) {
                     if (data.name) {
                         authServ.loggedIn = true;
@@ -23,6 +23,7 @@ squareddit.factory('auth', ['$http', function authFactory($http) {
                 error(function (data, status) {
                     authServ.loggedIn = false;
                     console.log('log in check failed');
+                    return;
                 });
         };
         
@@ -121,15 +122,15 @@ squareddit.factory('posts', ['$http', function postsFactory($http) {
 squareddit.factory('redditUser', ['$http', function usersFactory($http) {
     var userServ = {};
     
-    userServ.vote = function vote(id, dir) {
+    userServ.vote = function vote(postId, voteDir) {
         return $http.post('/user/vote',
             {
-                id: id,
-                dir: dir
+                id: postId,
+                dir: voteDir
             }).success(function (data) {
                 console.log('vote successful');
             }).error(function() {
-                console.log('vote for ' + id + ' unsuccessful!');
+                console.log('vote for ' + postId + ' unsuccessful!');
             });
     };
     
@@ -156,7 +157,7 @@ squareddit.controller('listPosts', [
         }, 500);
         
         $scope.vote = function ($event, postID, dir) {
-            var voteButton = $event.target;
+            var voteButton = $event.target.parentNode;
             
             $event.preventDefault();
             $event.stopPropagation();
@@ -165,17 +166,18 @@ squareddit.controller('listPosts', [
                 alert('You must be logged in to do that!');
                 return;
             }
+            
             //send a 0 (reset) dir if an active element is clicked
-            if (dir !== 0 && voteButton.className.indexOf('sr-post-voted')) {
+            if (dir !== 0 && voteButton.className.indexOf('sr-post-voted') >= 0) {
                 console.log('reset');
                 redditUser.vote(postID, 0);
-                voteButton.className.replace(/\bsr-post-voted\b/, '');
+                voteButton.className = 
+                    voteButton.className.replace(' sr-post-voted', '');
                 return;
             }
             
-            console.log(postID);
-            console.log(voteButton);
-            console.log(voteButton.className);
+            console.log('VOTING');
+            redditUser.vote(postID, dir);
             
             voteButton.className += ' sr-post-voted';
             

@@ -21,7 +21,6 @@ passport.use(new RedditStrategy({
     },
     function (accessToken, refreshToken, profile, done) {
         process.nextTick(function () {
-            console.log(profile);
             return done(null, profile);
         });
     }));

@@ -15,13 +15,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(bodyParser.json());
 
 function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated())
-        return next;
+    if (req.isAuthenticated()) { return next(); }
     res.redirect('/');
 }
 
@@ -53,11 +52,18 @@ app.get('/logout', function (req, res) {
     res.redirect('/');
 });
 
-app.post('/vote', function (req, res) {
+app.post('/vote', ensureAuthenticated, function (req, res) {
     var postId = req.body.id,
         direction = req.body.dir;
-        
     
+    passport.authenticate('reddit'),
+    function (req, res) {
+        console.log(req.account);
+    };
+    
+    console.log('vote');
+    console.log(postId);
+    console.log(req.account);
 });
 
 module.exports = app;
