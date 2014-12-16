@@ -19,8 +19,6 @@ mongoose.connect('mongodb://127.0.0.1/sqreddit', function (err, db) {
         console.log(err);
 });
 
-require('./models/Users');
-
 app.use(redditPassport.initialize());
 app.use(redditPassport.session());
 
