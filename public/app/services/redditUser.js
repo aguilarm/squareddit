@@ -8,8 +8,10 @@ squareddit.factory('redditUser', ['$http', function usersFactory($http) {
                 dir: voteDir
             }).success(function (data) {
                 console.log('vote successful');
+                return;
             }).error(function() {
                 console.log('vote for ' + postId + ' unsuccessful!');
+                return;
             });
     };
     

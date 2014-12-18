@@ -17,15 +17,13 @@ if (!secret) {
 
 var Account = Users.model('User');
 
-passport.use('reddit-authz', new RedditStrategy({
+passport.use(new RedditStrategy({
     clientID: secret.REDDIT_CONSUMER_KEY,
     clientSecret: secret.REDDIT_CONSUMER_SECRET,
     callbackURL: secret.CALLBACK_URL
     },
     function (accessToken, refreshToken, profile, done) {
         process.nextTick(function () {
-            console.log(profile);
-            
             Account.findOne({ uid: 'profile.id' }, 
                 function(err, account) {
                     if (err) { console.log(err) }
@@ -41,26 +39,9 @@ passport.use('reddit-authz', new RedditStrategy({
                     ];
                     account.tokens.push(t);
                     
-                    return done(null, account);
                 });
-            //return done(null, profile);
+            return done(null, profile);
         });
-}));
-
-passport.use(new RedditStrategy({
-        clientID: secret.REDDIT_CONSUMER_KEY,
-        clientSecret: secret.REDDIT_CONSUMER_SECRET,
-        callbackURL: secret.CALLBACK_URL,
-        passReqToCallback: true
-    },
-    function (req, accessToken, refreshToken, user, done) {
-        if (!req.user) {
-            console.log('Not logged in!');
-            
-        } else {
-            console.log('Logged in!');
-            return done(null, req.user);
-        }
 }));
 
     

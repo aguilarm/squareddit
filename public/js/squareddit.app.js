@@ -33,91 +33,92 @@ squareddit.factory('auth', ['$http', function authFactory($http) {
 'use strict';
 
 squareddit.factory('posts', ['$http', function postsFactory($http) {
-    var current = [],
-        currentSort = 'hot',
-        cachedSubreddit,
+    
+    //declare posts and a few scoped helper vars
+    var posts = {},
         loading = false,
-        after,
-        error = '',
-        processImgur = function (data) {
+        after;
+    
+    posts.current = [];
+    //init with 'hot' as default, will change soon
+    posts.currentSort = 'hot';
+    posts.loading = false;
+    posts.after = '';
+    posts.processImages = function processImages(v, i, arr) {
+        var post = v.data,
+            hasExt = (/\.(gif|gifv|jpg|jpeg|tiff|png)$/i).test(post.url);
+                
+        if(post.stickied)
             return;
-        },
-        processImages = function (v, i , arr) {
-            var post = v.data,
-                hasExt = (/\.(gif|gifv|jpg|jpeg|tiff|png)$/i).test(post.url);
                 
-            if(post.stickied)
-                return;
+        //imgur will grab the right image regardless of format
+        //most of the time if an imgur link has no ext, adding one is safe
+        //and makes it load properly.  need a proper fix for albums
+        if(post.domain.search("imgur") >= 0 && hasExt === false)
+            post.url += '.jpg';
                 
-            //imgur will grab the right image regardless of format
-            if(post.domain.search("imgur") >= 0 && hasExt === false)
-                post.url += '.jpg';
-                
-            //not imgur and no extension?  not displayed.
-            if(post.domain.search("imgur") === -1 && hasExt === false)
-                return;
+        //not imgur and no extension?  not displayed.
+        if(post.domain.search("imgur") === -1 && hasExt === false)
+            return;
             
-            return v;
-        };
-    return {
-        getPosts: function (subreddit, sortMethod, pageUp) {
-            if (loading) return;
-            loading = true;
-            
-            if (!sortMethod) 
-                sortMethod = 'hot';
-            if (!cachedSubreddit)
-                cachedSubreddit = current.sub;
-                
-            currentSort = sortMethod;
-            
-            if (!subreddit)
-                subreddit = current.sub;
-            if (!current.sub)
-                current.sub = subreddit;
-            
-            if(cachedSubreddit) {
-                if (cachedSubreddit.toLowerCase() != current.sub.toLowerCase()) {
-                    var blank=[];
-                    angular.copy(blank, current);
-                }
-            }
-            
-            cachedSubreddit = subreddit;
-            
-            var url = 'https://www.reddit.com/r/' + subreddit + '/' + sortMethod + '.json';
-            
-            if (after && pageUp)
-                url += after;
-                
-            return $http.get(url).
-                success(function (response) {
-                    var imgs = response.data.children.filter(processImages);
-                    
-                    for (var i = 0; i < imgs.length; i++) {
-                        current.push(imgs[i].data);
-                    }
-                    
-                    if (current.length === 0) {
-                        error = "No images or bad subreddit!";
-                        console.log('Error loading reddit page!');
-                        loading = false;
-                        return error;
-                    }
-                    
-                    after = '?after=' + imgs[imgs.length-1].data.name;
-                    loading = false;
-                }).
-                error(function (data, status) {
-                    error = "Request failed - error communicating with reddit.";
-                    loading = false;
-                    return error;
-                });
-        },
-        current: current,
-        currentSort: currentSort,
-        error: error,
+        return v;
     };
+    
+    posts.getPosts = function (subreddit, sortMethod, pageUp) {
+        if (loading) return;
+        loading = true;
+            
+        if (!sortMethod) 
+            sortMethod = 'hot';
+        if (!posts.cachedSubreddit)
+            posts.cachedSubreddit = posts.current.sub;
+            
+        posts.currentSort = sortMethod;
+            
+        if (!subreddit)
+            subreddit = posts.current.sub;
+        if (!posts.current.sub)
+            posts.current.sub = subreddit;
+        
+        if(posts.cachedSubreddit) {
+            if (posts.cachedSubreddit.toLowerCase() != posts.current.sub.toLowerCase()) {
+                var blank=[];
+                posts.angular.copy(blank, posts.current);
+            }
+        }
+            
+        posts.cachedSubreddit = subreddit;
+        
+        var url = 'https://www.reddit.com/r/' + subreddit + '/' + sortMethod + '.json';
+            
+        if (after && pageUp)
+            url += after;
+                
+        return $http.get(url).
+            success(function (response) {
+                var imgs = response.data.children.filter(posts.processImages);
+                    
+                for (var i = 0; i < imgs.length; i++) {
+                    posts.current.push(imgs[i].data);
+                }
+                    
+                if (posts.current.length === 0) {
+                    console.log('Error loading reddit page!');
+                    loading = false;
+                    return;
+                }
+                    
+                after = '?after=' + imgs[imgs.length-1].data.name;
+                loading = false;
+            }).
+            error(function (data, status) {
+                loading = false;
+                return ;
+            });
+    };
+    
+    return posts;
+    
 }]);
 squareddit.factory('redditUser', ['$http', function usersFactory($http) {
     var userServ = {};
@@ -129,8 +130,10 @@ squareddit.factory('redditUser', ['$http', function usersFactory($http) {
                 dir: voteDir
             }).success(function (data) {
                 console.log('vote successful');
+                return;
             }).error(function() {
                 console.log('vote for ' + postId + ' unsuccessful!');
+                return;
             });
     };
     
