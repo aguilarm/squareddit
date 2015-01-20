@@ -25,6 +25,7 @@ app.use(redditPassport.session());
 app.use('/js', express.static(__dirname + '/public/js'));
 app.use('/css', express.static(__dirname + '/public/css'));
 app.use('/app', express.static(__dirname + '/public/app'));
+app.use('/img', express.static(__dirname + '/public/img'));
 
 app.use('/user', userRoute);
 

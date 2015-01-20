@@ -153,6 +153,9 @@ main {
     height: 100vh;
     position:relative;
     overflow:hidden;
+    background-image:url('/img/loadspinner58.gif');
+    background-repeat:no-repeat;
+    background-position: center;
 }
 
 .sr-post > .sr-post-title, .sr-post > .sr-post-vote, .sr-post > .sr-post-vote > * {flex: 1 100%;transition: opacity,500ms;}
