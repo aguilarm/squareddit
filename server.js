@@ -3,14 +3,14 @@ var express = require('express'),
     swig = require('swig'),
     app = express(),
     mongoose = require('mongoose'),
-    userRoute = require('./routes/redditUser'),
-    redditPassport = require('./controllers/passport');
+    userRoute = require('./app/routes/redditUser'),
+    redditPassport = require('./app/controllers/passport');
 
 app.use(morgan('dev'));
 
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
-app.set('views', (__dirname + '/views'));
+app.set('views', (__dirname + '/app/views'));
 
 mongoose.connect('mongodb://127.0.0.1/sqreddit', function (err, db) {
     if (!err)
@@ -25,7 +25,7 @@ app.use(redditPassport.session());
 app.use(express.static(__dirname + '/public'));
 
 app.use('/', function (req, res, next) {
-    res.sendFile('/views/index.html', { root: (__dirname) });
+    res.sendFile('/app/views/index.html', { root: (__dirname) });
 });
 
 app.use(function (req, res, next) {

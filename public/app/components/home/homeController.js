@@ -1,6 +1,6 @@
 'use strict';
 
-squareddit.controller('listPosts', [
+squareddit.controller('homeController', [
     '$scope', '$document', 'posts', 'auth', 'redditUser',
     function ($scope, $document, posts, auth, redditUser) {
         var postsLength = document.getElementById('sr-posts').offsetHeight,
