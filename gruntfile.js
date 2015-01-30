@@ -5,8 +5,21 @@ module.exports = function(grunt) {
         
         concat: {
             dev: {
-                src: ['public/app/app.js', 'public/app/services/*.js', 'public/app/controllers/*.js', 'public/app/config/*.js', 'public/app/directives/*.js'],
-                dest: 'public/js/squareddit.app.js'
+                src: [
+                        'public/app/app.module.js',
+                        'public/app/app.routes.js',
+                        'public/app/shared/*.js', 
+                        'public/app/components/*.js',
+                    ],
+                dest: 'public/dist/js/squareddit.app.js'
+            }
+        },
+        
+        uglify: {
+            dev: {
+                files: {
+                    'public/dist/js/squareddit.app.min.js': ['public/dist/js/squareddit.app.js']
+                }
             }
         },
         
@@ -19,8 +32,9 @@ module.exports = function(grunt) {
     });
         
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     
-    grunt.registerTask('dev', ['concat', 'watch']);
+    grunt.registerTask('dev', ['concat', 'uglify', 'watch']);
 
 };

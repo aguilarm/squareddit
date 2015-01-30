@@ -4,7 +4,7 @@ var express = require('express'),
     app = express(),
     mongoose = require('mongoose'),
     userRoute = require('./app/routes/redditUser'),
-    redditPassport = require('./app/controllers/passport');
+    redditPassport = require('./config/passport');
 
 app.use(morgan('dev'));
 
@@ -23,10 +23,6 @@ app.use(redditPassport.initialize());
 app.use(redditPassport.session());
 
 app.use(express.static(__dirname + '/public'));
-
-app.use('/', function (req, res, next) {
-    res.sendFile('/app/views/index.html', { root: (__dirname) });
-});
 
 app.use(function (req, res, next) {
     var err = new Error('Not Found');

@@ -1,6 +1,6 @@
 var passport = require('passport'),
     RedditStrategy = require('passport-reddit').Strategy,
-    Users = require('../models/Users'),
+    Users = require('../app/models/Users'),
     secret = require('../config/secret.js');
 
 passport.serializeUser(function (user, done) {

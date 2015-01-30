@@ -5,7 +5,7 @@ var express = require('express'),
     request = require('request'),
     crypto = require('crypto'),
     app = express(),
-    secret = require('../config/secret.js');
+    secret = require('../../config/secret.js');
     
 app.use(session({   
     secret: secret.sessionSecret,

@@ -6,6 +6,8 @@ npm-debug.log
 
 redditConfig.js
 secret.js
+squareddit.app.js
+squareddit.app.min.js
 
 data
 mongod
