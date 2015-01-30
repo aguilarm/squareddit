@@ -22,14 +22,9 @@ mongoose.connect('mongodb://127.0.0.1/sqreddit', function (err, db) {
 app.use(redditPassport.initialize());
 app.use(redditPassport.session());
 
-app.use('/js', express.static(__dirname + '/public/js'));
-app.use('/css', express.static(__dirname + '/public/css'));
-app.use('/app', express.static(__dirname + '/public/app'));
-app.use('/img', express.static(__dirname + '/public/img'));
+app.use(express.static(__dirname + '/public'));
 
-app.use('/user', userRoute);
-
-app.all('/*', function (req, res, next) {
+app.use('/', function (req, res, next) {
     res.sendFile('/views/index.html', { root: (__dirname) });
 });
 
