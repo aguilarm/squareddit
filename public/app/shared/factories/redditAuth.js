@@ -1,4 +1,4 @@
-squareddit.factory('auth', ['$http', function authFactory($http) {
+squareddit.factory('redditAuth', ['$http', function authFactory($http) {
     var authServ = {};
     
     authServ.loggedIn = false;

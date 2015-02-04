@@ -1,6 +1,4 @@
-'use strict';
-
-squareddit.factory('posts', ['$http', function postsFactory($http) {
+squareddit.factory('redditPosts', ['$http', function postsFactory($http) {
     
     //declare posts and a few scoped helper vars
     var posts = {},

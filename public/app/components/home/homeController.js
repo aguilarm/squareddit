@@ -1,21 +1,20 @@
-'use strict';
-
 squareddit.controller('homeController', [
-    '$scope', '$document', 'posts', 'auth', 'redditUser',
-    function ($scope, $document, posts, auth, redditUser) {
+    '$scope', '$document', 'redditPosts', 'redditAuth', 'redditUser',
+    function ($scope, $document, redditPosts, redditAuth, redditUser) {
         var postsLength = document.getElementById('sr-posts').offsetHeight,
             winH = window.innerHeight,
             scrollPosBottom,
             threshold;
-        $scope.posts = posts;
-        $scope.auth = auth;
+            
+        $scope.posts = redditPosts;
+        $scope.auth = redditAuth;
         
         setInterval(function() {
             scrollPosBottom = window.pageYOffset + winH;
             postsLength = document.getElementById('sr-posts').offsetHeight;
             threshold = postsLength - winH;
             if (scrollPosBottom >= threshold && threshold > winH*0.8)
-                posts.getPosts(posts.currentSub, 'hot', true);
+                redditPosts.getPosts(redditPosts.currentSub, 'hot', true);
         }, 500);
         
         $scope.vote = function ($event, postID, dir) {
@@ -24,7 +23,7 @@ squareddit.controller('homeController', [
             $event.preventDefault();
             $event.stopPropagation();
             
-            if (auth.loggedIn === false) {
+            if (redditAuth.loggedIn === false) {
                 alert('You must be logged in to do that!');
                 return;
             }

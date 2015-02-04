@@ -8,8 +8,8 @@ module.exports = function(grunt) {
                 src: [
                         'public/app/app.module.js',
                         'public/app/app.routes.js',
-                        'public/app/shared/*.js', 
-                        'public/app/components/*.js',
+                        'public/app/*.js',
+                        'public/app/**/*.js',
                     ],
                 dest: 'public/dist/js/squareddit.app.js'
             }
@@ -26,7 +26,7 @@ module.exports = function(grunt) {
         watch: {
             dev: {
                 files: ['public/app/*.js', 'public/app/**/*.js'],
-                tasks: ['concat']
+                tasks: ['concat', 'uglify']
             }
         },
     });

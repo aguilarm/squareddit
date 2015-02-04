@@ -1,9 +1,7 @@
-'use strict';
-
-squareddit.controller('menuControls', ['$scope', 'posts', 'auth',
-    function ($scope, posts, auth) {
-        $scope.posts = posts;
-        $scope.auth = auth;
+squareddit.controller('sidebarController', ['$scope', 'redditPosts', 'redditAuth',
+    function ($scope, redditPosts, redditAuth) {
+        $scope.posts = redditPosts;
+        $scope.auth = redditAuth;
         
         $scope.sortMethods = [
             'hot',
@@ -24,7 +22,7 @@ squareddit.controller('menuControls', ['$scope', 'posts', 'auth',
                 return;
             }
             
-            auth.showLogin = false;
-            auth.logIn(user, pass, rem);
+            redditAuth.showLogin = false;
+            redditAuth.logIn(user, pass, rem);
         }
 }]);

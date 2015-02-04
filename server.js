@@ -3,7 +3,7 @@ var express = require('express'),
     swig = require('swig'),
     app = express(),
     mongoose = require('mongoose'),
-    userRoute = require('./app/routes/redditUser'),
+    redditUserRoute = require('./app/routes/redditUser'),
     redditPassport = require('./config/passport');
 
 app.use(morgan('dev'));
@@ -22,6 +22,8 @@ mongoose.connect('mongodb://127.0.0.1/sqreddit', function (err, db) {
 app.use(redditPassport.initialize());
 app.use(redditPassport.session());
 
+app.use('/user', redditUserRoute);
+
 app.use(express.static(__dirname + '/public'));
 
 app.use(function (req, res, next) {
@@ -29,7 +31,6 @@ app.use(function (req, res, next) {
     err.status = 404;
     next(err);
 });
-
 if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
         res.status(err.status || 500);
@@ -52,9 +53,8 @@ if (app.get('env') === 'development') {
 app.set('port', process.env.PORT || 3000);
 
 var server = app.listen(app.get('port'), function () {
-    console.log('Express server listening on port ' + server.address().port);
-    console.log(process.env.IP);
+    console.log('Express server listening at ' + process.env.IP + ':' + app.get('port'));
     if (app.get('env') === 'development') {
-        console.log(app.get('env'));
+        console.log('Using the ' + app.get('env') + ' environment.');
     }
 });

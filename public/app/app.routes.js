@@ -8,46 +8,24 @@ squareddit.config([
                 url: '/',
                 views: {
                     'statusbar': {
-                        templateUrl: '/app/views/statusbar/home.html',
-                        controller: 'menuControls'
+                        templateUrl: '/app/shared/statusbar/statusbarView.html',
+                        controller: 'statusbarController'
                     },
                     'content': {
-                        templateUrl: '/app/views/home.html',
-                        controller: 'listPosts'
+                        templateUrl: '/app/components/home/homeView.html',
+                        controller: 'homeController'
                     },
-                    'menu': {
-                        templateUrl: '/app/views/menu/home.html',
-                        controller: 'menuControls'
+                    'sidebar': {
+                        templateUrl: '/app/shared/sidebar/sidebarView.html',
+                        controller: 'sidebarController'
                     }
                 },
                 resolve: {
-                    post: ['posts', function (posts) {
-                        return posts.getPosts('cityPorn', 'hot', false);
+                    post: ['redditPosts', function (redditPosts) {
+                        return redditPosts.getPosts('cityPorn', 'hot', false);
                     }],
-                    user: ['auth', function (auth) {
-                        return auth.getUser();
-                    }]
-                }
-            })
-            .state('subreddit', {
-                url: '/r/:subreddit',
-                views: {
-                    'statusbar': {
-                        templateUrl: 'app/views/statusbar/home.html',
-                        controller: 'menuControls'
-                    },
-                    'content': {
-                        templateUrl: 'app/views/home.html',
-                        controller: 'listPosts'
-                    },
-                    'menu': {
-                        templateUrl: 'app/views/menu/home.html',
-                        controller: 'menuControls'
-                    }
-                },
-                resolve: {
-                    post: ['$stateParams', 'posts', function ($stateParams, posts) {
-                        return posts.getPosts($stateParams.subreddit, 'hot', false);
+                    user: ['redditAuth', function (redditAuth) {
+                        return redditAuth.getUser();
                     }]
                 }
         });
