@@ -1,24 +1,7 @@
 <div class="sr-posts" id="sr-posts">
-    <a ng-repeat="post in posts.current" 
-    href="http://www.reddit.com{{post.permalink}}" 
-    class="sr-post" 
-    backImg="{{post.url}}">
-        <div class="sr-post-vote-upvote sr-post-vote pull-right" 
-            ng-click="vote($event, post.name, 1)">
-            <p>
-                <span class="glyphicon glyphicon-chevron-up"></span><br>
-                {{post.ups}}
-            </p>
-        </div>
-        <div class="sr-post-vote-downvote sr-post-vote pull-right" 
-            ng-click="vote($event, post.name, -1)">
-            <p><span class="glyphicon glyphicon-chevron-down"></span></p>
-        </div>
-        <div class="sr-post-title">
-            <h3>{{post.title}}<br>
-                <small>by {{post.author}}</small>
-            </h3>
-            
-        </div>
-    </a>
+    <post
+        class="sr-post"
+        ng-repeat="post in posts.current"
+        backImg="{{post.url}}">
+    </post>
 </div>

@@ -2,7 +2,7 @@
 
 html, body, sr-container, sr-pusher, sr-content { height: 100%; }
 
-body {font-family:Roboto, sans-serif; background-color:#000;}
+body {font-family:Roboto, sans-serif;}
 
 /*==================================
     Sidebar Rules - from codrops
@@ -147,13 +147,14 @@ main {
     flex-wrap: wrap;
     height:100%;
 }
+
 .sr-post {
     margin: auto;
     width:33.33%;
     height: 100vh;
     position:relative;
     overflow:hidden;
-    background-image:url('../img/loadspinner58.gif');
+    background-image:url('../img/loadspinner72.gif');
     background-repeat:no-repeat;
     background-position: center;
 }

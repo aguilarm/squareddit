@@ -25,7 +25,7 @@ module.exports = function(grunt) {
         
         watch: {
             dev: {
-                files: ['public/app/*.js', 'public/app/**/*.js'],
+                files: ['public/app/*.js', 'public/app/**/*.js', 'public/app/shared/**/*.js'],
                 tasks: ['concat', 'uglify']
             }
         },

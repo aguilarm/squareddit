@@ -2,7 +2,7 @@
 
 //define and start up the application
 
-var squareddit = angular.module('squareddit', ['ui.router']);
+var squareddit = angular.module('squareddit', ['ui.router', 'ngMaterial']);
 squareddit.config([
     '$stateProvider',
     '$urlRouterProvider',
@@ -87,28 +87,6 @@ squareddit.controller('homeController', [
             voteButton.className += ' sr-post-voted';
             
         };
-        
-        $document.on('keydown', function(e) {
-            if (e.keyCode === 40) {
-                e.preventDefault();
-                window.scrollBy(0,winH);
-            }
-            if (e.keyCode === 38) {
-                e.preventDefault();
-                window.scrollBy(0,-winH);
-            }
-            if (e.keyCode === 37) {
-                e.preventDefault();
-                window.scrollBy(0, -winH);
-            }
-            if (e.keyCode === 39) {
-                e.preventDefault();
-                window.scrollBy(0, winH);
-            }
-        });
-        
-        
-            
             
 }]);
 squareddit.directive('backimg', function(){
@@ -117,25 +95,58 @@ squareddit.directive('backimg', function(){
         restrict: 'A',
         
         link: function(scope, element, attrs){
-            var url = attrs.backimg; 
-        
-            //url is not an image:
-            if (!(/\.(gif|gifv|jpg|jpeg|tiff|png)$/i).test(url)) {
-                //TODO make an error image rather than this
-                element.css({'background-color':'#000'});
-                return;
-            }
-            
-            var img = new Image();
+            var url = attrs.backimg,
+                img = new Image();
             img.onload = function () {
                 element.css({
-                'background-image': 'url(' + url +')',
-                'background-size' : 'cover',
-                'background-position' : '50% 50%'
+                    'background-image': 'url(' + url +')',
+                    'background-size' : 'cover',
+                    'background-position' : '50% 50%'
                 });
             };
             img.src = url;
         }
+    };
+});
+squareddit.directive('srKeybindings', [
+    '$document',
+    function ($document, $rootScope) {
+        return {
+            restrict: 'A', 
+            
+            link: function() {
+                
+                var winH = window.innerHeight;
+                
+                $document.on('keydown', function (e) {
+                    if (e.keyCode === 40) {
+                        e.preventDefault();
+                        window.scrollBy(0, winH);
+                    }
+                    if (e.keyCode === 38) {
+                        e.preventDefault();
+                        window.scrollBy(0, -winH);
+                    }
+                    if (e.keyCode === 37) {
+                        e.preventDefault();
+                        window.scrollBy(0, -winH);
+                    }
+                    if (e.keyCode === 39) {
+                        e.preventDefault();
+                        window.scrollBy(0, winH);
+                    }
+                })
+            }
+        };
+    }
+]);
+squareddit.directive('post', function(){
+    return {
+        
+        restrict: 'E',
+        
+        templateUrl: '/app/shared/directives/post/postTemplate.html',
+        
     };
 });
 squareddit.factory('redditAuth', ['$http', function authFactory($http) {

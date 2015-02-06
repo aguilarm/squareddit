@@ -43,27 +43,5 @@ squareddit.controller('homeController', [
             voteButton.className += ' sr-post-voted';
             
         };
-        
-        $document.on('keydown', function(e) {
-            if (e.keyCode === 40) {
-                e.preventDefault();
-                window.scrollBy(0,winH);
-            }
-            if (e.keyCode === 38) {
-                e.preventDefault();
-                window.scrollBy(0,-winH);
-            }
-            if (e.keyCode === 37) {
-                e.preventDefault();
-                window.scrollBy(0, -winH);
-            }
-            if (e.keyCode === 39) {
-                e.preventDefault();
-                window.scrollBy(0, winH);
-            }
-        });
-        
-        
-            
             
 }]);

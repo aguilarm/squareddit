@@ -1,31 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="squareddit">
     <head>
         <title>Squareddit</title>
         
         <!--stylesheets-->
-        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
-        <link href="dist/css/main.css" rel="stylesheet">
+        <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/bower_components/angular-material/angular-material.css" rel="stylesheet">
+        <link href="/dist/css/main.css" rel="stylesheet">
         
         <!--for ui-router html5-->
         <base href="/"></base>
         
     </head>
-    <body ng-app="squareddit">
-        <div class="sr-menu sr-effect">
-            <div class="sr-menu-pullbar" id="sr-menu-pullbar">
-                <div class="sr-menu-pullbar-wrap">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                </div>
-            </div>
-            <div ui-view="menu" class="sr-menu-main"></div>
-        </div>
-        <div id="sr-container" class="sr-container">
-            <div class="sr-pusher">
-                <div ui-view="content" class="sr-content">
-                </div>
-            </div>
-        </div>
+    <body sr-keybindings>
+        
+        <div ui-view="sidebar"></div>
+        
+        <div ui-view="content" class="sr-content"></div>
+            
         <div ui-view="statusbar" class="sr-statusbar"></div>
         
         <!--angular/dependencies-->
@@ -38,12 +30,8 @@
         <script src="/bower_components/angular-animate/angular-animate.js"></script>
         <script src="/bower_components/angular-material/angular-material.js"></script>
         
-        <script src="dist/libs/ui-bootstrap-tpls-0.12.0.js"></script>
-        
         <!--app/tools-->
         <script src="dist/js/squareddit.app.js"></script>
-        <script src="/dist/libs/classie.js"></script>
-        <script src="/dist/libs/sidebarEffects.js"></script>
         
     </body>
 </html>
