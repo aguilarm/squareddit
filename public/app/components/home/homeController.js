@@ -8,6 +8,7 @@ squareddit.controller('homeController', [
             
         $scope.posts = redditPosts;
         $scope.auth = redditAuth;
+        $scope.user = redditUser;
         
         setInterval(function() {
             scrollPosBottom = window.pageYOffset + winH;
@@ -16,6 +17,8 @@ squareddit.controller('homeController', [
             if (scrollPosBottom >= threshold && threshold > winH*0.8)
                 redditPosts.getPosts(redditPosts.currentSub, 'hot', true);
         }, 500);
+        
+        
         
         $scope.vote = function ($event, postID, dir) {
             var voteButton = $event.target.parentNode;

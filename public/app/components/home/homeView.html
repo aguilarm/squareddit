@@ -1,7 +1,10 @@
-<div class="sr-posts" id="sr-posts">
-    <post
+<div class="sr-posts" 
+    id="sr-posts" 
+    sr-endless-reload="{{user.srSettings.endlessReload}}"
+    >
+    <sr-post
         class="sr-post"
         ng-repeat="post in posts.current"
-        backImg="{{post.url}}">
-    </post>
+        sr-back-img="{{post.url}}">
+    </sr-post>
 </div>

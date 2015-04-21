@@ -1,6 +1,10 @@
 squareddit.factory('redditUser', ['$http', function usersFactory($http) {
     var userServ = {};
     
+    userServ.srSettings = {
+        endlessReload: 1
+    };
+    
     userServ.vote = function vote(postId, voteDir) {
         return $http.post('/user/vote',
             {

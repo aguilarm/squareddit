@@ -52,6 +52,7 @@ squareddit.controller('homeController', [
             
         $scope.posts = redditPosts;
         $scope.auth = redditAuth;
+        $scope.user = redditUser;
         
         setInterval(function() {
             scrollPosBottom = window.pageYOffset + winH;
@@ -60,6 +61,8 @@ squareddit.controller('homeController', [
             if (scrollPosBottom >= threshold && threshold > winH*0.8)
                 redditPosts.getPosts(redditPosts.currentSub, 'hot', true);
         }, 500);
+        
+        
         
         $scope.vote = function ($event, postID, dir) {
             var voteButton = $event.target.parentNode;
@@ -89,7 +92,26 @@ squareddit.controller('homeController', [
         };
             
 }]);
-squareddit.directive('backimg', function(){
+squareddit.directive('srBackImg', function(){
+    return {
+        
+        restrict: 'A',
+        
+        link: function(scope, element, attrs){
+            var url = attrs.backimg,
+                img = new Image();
+            img.onload = function () {
+                element.css({
+                    'background-image': 'url(' + url +')',
+                    'background-size' : 'cover',
+                    'background-position' : '50% 50%'
+                });
+            };
+            img.src = url;
+        }
+    };
+});
+squareddit.directive('srEndlessReload', function(){
     return {
         
         restrict: 'A',
@@ -266,6 +288,10 @@ squareddit.factory('redditPosts', ['$http', function postsFactory($http) {
 }]);
 squareddit.factory('redditUser', ['$http', function usersFactory($http) {
     var userServ = {};
+    
+    userServ.srSettings = {
+        endlessReload: 1
+    };
     
     userServ.vote = function vote(postId, voteDir) {
         return $http.post('/user/vote',

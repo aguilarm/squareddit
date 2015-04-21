@@ -1,4 +1,4 @@
-squareddit.directive('backimg', function(){
+squareddit.directive('srBackImg', function(){
     return {
         
         restrict: 'A',
