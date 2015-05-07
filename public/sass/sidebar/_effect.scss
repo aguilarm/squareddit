@@ -1,0 +1,20 @@
+/*==================================
+    Sidebar Effect
+====================================*/
+
+.sr-container{overflow-y:hidden;perspective: 1500px;}
+.sr-menu-open .sr-container {overflow-y:hidden;}
+.sr-pusher {
+  transform-origin: 0% 50%;
+  transform-style: preserve-3d;
+}
+.sr-menu-open .sr-pusher {transform: translate3d(300px, 0, 0) rotateY(-15deg);}
+.sr-menu {
+  transform:translate3d(-100%, 0, 0);
+  transform-origin:100% 50%;
+  transform-style: preserve-3d;
+}
+.sr-menu-open .sr-menu {
+  transition:transform 0.5s;
+  transform:translate3d(0%, 0, 0);
+}

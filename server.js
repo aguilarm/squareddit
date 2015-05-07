@@ -3,8 +3,8 @@ var express = require('express'),
     swig = require('swig'),
     app = express(),
     mongoose = require('mongoose'),
-    userRoute = require('./routes/redditUser'),
-    redditPassport = require('./controllers/passport');
+    userRoute = require('./nodeapp/routes/redditUser'),
+    redditPassport = require('./nodeapp/controllers/passport');
 
 app.use(morgan('dev'));
 

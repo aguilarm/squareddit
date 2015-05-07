@@ -1,0 +1,32 @@
+/*==================================
+    Status Bar Styles
+====================================*/
+
+.sr-statusbar {
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:20px;
+  color:$white;
+  background:$black;
+  opacity: 0.6;
+  transition: opacity 500ms,font-size 500ms, height 500ms;
+  padding: 0 5px;
+}
+
+.sr-statusbar:hover {
+  opacity: 1;
+  font-size:1.5em;
+  height:1.5em;
+}
+
+.sr-status-loggedin {
+  position:fixed;
+  top:0;
+  right: 5px;
+}
+
+.sr-status-loggedin a {
+  cursor: pointer;
+}
