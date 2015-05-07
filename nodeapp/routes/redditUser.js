@@ -1,13 +1,13 @@
 var express = require('express'),
-    passport = require('passport'),
-    session = require('express-session'),
-    bodyParser = require('body-parser'),
-    request = require('request'),
-    crypto = require('crypto'),
-    app = express(),
-    secret = require('../../config/secret.js');
-    
-app.use(session({   
+  passport = require('passport'),
+  session = require('express-session'),
+  bodyParser = require('body-parser'),
+  request = require('request'),
+  crypto = require('crypto'),
+  app = express(),
+  secret = require('../../config/secret.js');
+
+app.use(session({
     secret: secret.sessionSecret,
     saveUninitialized: true,
     resave: true
@@ -54,13 +54,13 @@ app.get('/logout', function (req, res) {
 
 app.post('/vote', ensureAuthenticated, function (req, res) {
     var postId = req.body.id,
-        direction = req.body.dir;
-    
+      direction = req.body.dir;
+
     passport.authenticate('reddit'),
-    function (req, res) {
-        console.log(req.account);
-    };
-    
+      function (req, res) {
+          console.log(req.account);
+      };
+
     console.log('vote');
     console.log(postId);
     console.log(req.account);

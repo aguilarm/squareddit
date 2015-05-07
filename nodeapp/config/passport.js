@@ -1,7 +1,14 @@
-var passport = require('passport'),
-    RedditStrategy = require('passport-reddit').Strategy,
-    Users = require('../app/models/Users'),
-    secret = require('../config/secret.js');
+var passport = require('passport');
+var RedditStrategy = require('passport-reddit').Strategy;
+var Users = require('../models/Users');
+
+// throw a descriptive error if lacking secret.js
+try {
+    var secret = require('./nodeapp/config/secret.js');
+} catch (err) {
+    console.log("This app requires '../config/secret.js' to return a secret object with REDDIT_CONSUMER_KEY, " +
+      "REDDIT_CONSUMER_SECRET, and CALLBACK_URL params!");
+}
 
 passport.serializeUser(function (user, done) {
     done(null, user);
@@ -10,10 +17,6 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (obj, done) {
     done(null, obj);
 });
-
-if (!secret) {
-    throw "This app requires '../config/secret.js' to return secret.REDDIT_CONSUMER_KEY, .REDDIT_CONSUMER_SECRET, and .CALLBACK_URL!";
-}
 
 var Account = Users.model('User');
 

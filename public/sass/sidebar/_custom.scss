@@ -1,0 +1,19 @@
+/*==================================
+    Sidebar Styles
+====================================*/
+.sr-menu-main {
+  text-align:center;
+}
+.sr-menu-main > select {
+  background-color:$black;
+}
+.sr-menu-main > input {
+  background-color:$black;
+  color:#fff;
+  border:none;
+  text-align:center;
+}
+
+.sr-menu-main > input:focus {
+  outline-color:#fff;
+}
