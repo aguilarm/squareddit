@@ -4,7 +4,6 @@ squareddit.directive('srEndlessReload', function(){
         restrict: 'A',
         
         link: function(scope, element, attrs){
-            console.log(attrs);
         }
     };
 });

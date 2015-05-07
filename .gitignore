@@ -14,3 +14,5 @@ data
 mongod
 
 .idea
+
+.vagrant

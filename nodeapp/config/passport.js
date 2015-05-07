@@ -4,7 +4,7 @@ var Users = require('../models/Users');
 
 // throw a descriptive error if lacking secret.js
 try {
-    var secret = require('./nodeapp/config/secret.js');
+    var secret = require('./secret.js');
 } catch (err) {
     console.log("This app requires '../config/secret.js' to return a secret object with REDDIT_CONSUMER_KEY, " +
       "REDDIT_CONSUMER_SECRET, and CALLBACK_URL params!");

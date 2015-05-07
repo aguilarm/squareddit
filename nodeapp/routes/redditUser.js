@@ -4,8 +4,14 @@ var express = require('express'),
   bodyParser = require('body-parser'),
   request = require('request'),
   crypto = require('crypto'),
-  app = express(),
-  secret = require('../../config/secret.js');
+  app = express();
+
+try {
+  var secret = require('../config/secret.js');
+} catch (err) {
+  console.log("This app requires '../config/secret.js' to return a secret object with REDDIT_CONSUMER_KEY, " +
+    "REDDIT_CONSUMER_SECRET, and CALLBACK_URL params!");
+}
 
 app.use(session({
     secret: secret.sessionSecret,

@@ -3,14 +3,14 @@ var express = require('express'),
     swig = require('swig'),
     app = express(),
     mongoose = require('mongoose'),
-    userRoute = require('./nodeapp/routes/redditUser'),
-    redditPassport = require('./nodeapp/controllers/passport');
+    redditUserRoute = require('./nodeapp/routes/redditUser'),
+    redditPassport = require('./nodeapp/config/passport');
 
 app.use(morgan('dev'));
 
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
-app.set('views', (__dirname + '/app/views'));
+app.set('views', (__dirname + '/nodeapp/views'));
 
 mongoose.connect('mongodb://127.0.0.1/sqreddit', function (err, db) {
     if (!err)
@@ -49,8 +49,8 @@ if (app.get('env') === 'development') {
     });
 }
 
-
-app.set('port', process.env.PORT || 3000);
+//probably shouldnt default to 80, but #TODO
+app.set('port', process.env.PORT || 80);
 
 var server = app.listen(app.get('port'), function () {
     console.log('Express server listening at ' + process.env.IP + ':' + app.get('port'));
