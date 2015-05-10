@@ -1,10 +1,10 @@
-var express = require('express'),
-    morgan = require('morgan'),
-    swig = require('swig'),
-    app = express(),
-    mongoose = require('mongoose'),
-    redditUserRoute = require('./nodeapp/routes/redditUser'),
-    redditPassport = require('./nodeapp/config/passport');
+var express = require('express');
+var morgan = require('morgan');
+var swig = require('swig');
+var app = express();
+var mongoose = require('mongoose');
+var redditUserRoute = require('./nodeapp/routes/redditUser');
+var redditPassport = require('./nodeapp/config/passport');
 
 app.use(morgan('dev'));
 
@@ -12,11 +12,11 @@ app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
 app.set('views', (__dirname + '/nodeapp/views'));
 
-mongoose.connect('mongodb://127.0.0.1/sqreddit', function (err, db) {
+mongoose.connect('secret.USERS_DB', function (err, db) {
     if (!err)
-        console.log('Connected to MongoDB!');
+        console.log('Connected to USERS_DB!');
     else
-        console.log(err);
+        throw err;
 });
 
 app.use(redditPassport.initialize());
